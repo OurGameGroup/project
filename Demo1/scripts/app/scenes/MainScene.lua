@@ -11,6 +11,7 @@ require("app/layer/BackgroundLayer")
 
 frame = 60
 counting = 0
+hitrange = 100
 
 function MainScene:ctor()
 
@@ -49,6 +50,10 @@ end
 
 
 function MainScene:update()
+  if(startSpeed <= 30) then
+    startSpeed = startSpeed + 1
+  end
+
   if (counting >= frame * 3 ) then 
     local position = randomVector(0, display.cy, display.width, display.height)
     local enemy = ClassEnemy.new()
@@ -81,7 +86,26 @@ function MainScene:update()
       i = i - 1
       self:removeChild(enemy)
     end
-  end 
+  end
+
+  for i,enemy in ipairs(self._listEnemy) do
+    for j,bullet in ipairs(self._listBullet) do
+        local bulletPointToEnemy = sub(enemy:getPositionInCCPoint(),bullet:getPositionInCCPoint())
+        
+        if(bulletPointToEnemy:getLengthSq() < hitrange*hitrange ) then
+          table.remove(self._listEnemy,i)
+          i = i - 1
+          self:removeChild(enemy)
+
+          table.remove(self._listBullet, j)
+          j = j - 1
+          self:removeChild(bullet)
+
+          break
+        end
+
+    end
+  end
 end
 
 
@@ -93,18 +117,24 @@ TouchEventString.moved = "moved"
 TouchEventString.ended = "ended"
 TouchEventString.canceled = "canceled"
 
-
+startSpeed = 0
 function MainScene:onTouch(name,x,y,prevX,prevY)
-    
-	if name == TouchEventString.began then
+  -- print(name)
+
+  if name == TouchEventString.began then
+    startSpeed = 0
+  elseif ((name == TouchEventString.ended) or (name == TouchEventString.canceled)) then
 
     local bullet = ClassBullet.new()
     self:addChild(bullet)
-    bullet:init(x,y)
-        
+    bullet:init(x,y,startSpeed)
 
+    -- print(startSpeed)
     table.insert(self._listBullet, bullet)
-	end	
+  else
+     
+	end
+
 
 	return true
 end
@@ -113,5 +143,7 @@ function MainScene:testKeypad(event)
     print("event.name:"..event.name,"event.key:"..event.key)
     gravity = -gravity
 end 
+
+
 
 return MainScene

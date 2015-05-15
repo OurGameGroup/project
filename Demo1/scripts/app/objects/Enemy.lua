@@ -2,7 +2,8 @@ local Enemy = class("Enemy", function()
     return display.newNode()
 end)
 
-enemySpeed = 5
+enemySpeed = 1
+
 
 require("app/tools/Vector")
 
@@ -12,14 +13,16 @@ function Enemy:ctor()
 	self:addChild(self._imgBullet)
 
 	self.speed = CCPoint(0,0)
-
 	self.inited = false
 end
 
 function Enemy:init(x,y)
 	self:pos(x, y)
-	self.speed = CCPoint(enemySpeed,0)
 
+	self.centery = y
+	
+	self.speed = CCPoint(enemySpeed,0)
+	self.acceleration = CCPoint(0,2)
 	self.inited = true
 end
 
@@ -40,8 +43,21 @@ function Enemy:update()
 		local nextstep = self:getPositionInCCPoint();
 		nextstep = add(self.speed,nextstep)
 		self:pos(nextstep.x, nextstep.y)
-
+		self:wave()
 		-- self.speed = add(self.speed,gravity)
+	end
+end
+
+changespeed = 0
+
+function Enemy:wave()
+	if (self.inited) then
+		changespeed = changespeed + 1
+		if(changespeed >= 1) then
+		self.speed = add(self.speed,self.acceleration)
+		self.acceleration = CCPoint(0,(self.centery - self:getPositionY())/display.height)
+		changespeed = 0
+		end
 	end
 end
 

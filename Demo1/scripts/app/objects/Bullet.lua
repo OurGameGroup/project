@@ -2,7 +2,7 @@ local Bullet = class("Bullet", function()
     return display.newNode()
 end)
 
-startSpeed = 20
+
 gravity = CCPoint(0,-0.3)
 
 require("app/tools/Vector")
@@ -17,8 +17,8 @@ function Bullet:ctor()
 	self.inited = false
 end
 
-function Bullet:init( x,y )
-	
+function Bullet:init( x,y,startSpeed)
+
 	self:pos(display.cx, 0)
 
 	local distance = math.sqrt((x - display.cx)*(x - display.cx)+y*y)
