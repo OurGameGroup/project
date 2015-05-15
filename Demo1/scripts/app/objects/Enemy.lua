@@ -21,7 +21,13 @@ function Enemy:init(x,y)
 
 	self.centery = y
 	
-	self.speed = CCPoint(enemySpeed,0)
+	if(x > display.cx)then
+		self:setScaleX(-1)
+		self.speed = CCPoint(-enemySpeed,0)
+	else
+		self.speed = CCPoint(enemySpeed,0)
+	end
+
 	self.acceleration = CCPoint(0,2)
 	self.inited = true
 end

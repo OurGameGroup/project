@@ -12,9 +12,14 @@ require("app/layer/BackgroundLayer")
 frame = 60
 counting = 0
 hitrange = 100
+xSecondsOneEnemy = 3
+kill = 0
+playSound= false
 
 function MainScene:ctor()
-
+  audio.preloadMusic("dungeon.mp3")
+  audio.playMusic("dungeon.mp3", true)
+  audio.preloadSound("coin.mp3")
 	local layer = display.newLayer()
 
 	layer:setTouchEnabled(true)
@@ -27,8 +32,8 @@ function MainScene:ctor()
   layer:setTouchSwallowEnabled(false)
 
   -- 键盘事件(esc)
-  -- layer:setKeypadEnabled(true)
-  -- layer:addNodeEventListener(cc.KEYPAD_EVENT,handler(self,self.testKeypad))
+  layer:setKeypadEnabled(true)
+  layer:addNodeEventListener(cc.KEYPAD_EVENT,handler(self,self.testKeypad))
 
   self:addChild(layer)
 
@@ -36,6 +41,17 @@ function MainScene:ctor()
   self._imgBack:setAnchorPoint(ccp(0,0))
 
   self:addChild(self._imgBack)
+
+  self.labelTTF = ui.newTTFLabelWithOutline({
+    text  = "0",
+    size  = 30,
+    color = ccc3(255, 0, 0),
+    align = ui.TEXT_ALIGN_RIGHT,
+    x     = 30,
+    y     = 30,
+    outlineColor = ccc3(255, 255, 0)
+    })
+  self:addChild(self.labelTTF)
 
 
   self._scheduler = require("framework.scheduler")
@@ -54,7 +70,7 @@ function MainScene:update()
     startSpeed = startSpeed + 1
   end
 
-  if (counting >= frame * 3 ) then 
+  if (counting >= frame * xSecondsOneEnemy ) then 
     local position = randomVector(0, display.cy, display.width, display.height)
     local enemy = ClassEnemy.new()
     self:addChild(enemy)
@@ -100,11 +116,19 @@ function MainScene:update()
           table.remove(self._listBullet, j)
           j = j - 1
           self:removeChild(bullet)
+          kill = kill + 1
 
-          break
+          
+          playSound = true
         end
 
     end
+  end
+
+  self.labelTTF:setString(kill)
+  if(playSound)then
+    audio.playSound("coin.mp3",false)
+    playSound = false
   end
 end
 
@@ -139,9 +163,16 @@ function MainScene:onTouch(name,x,y,prevX,prevY)
 	return true
 end
 
+playing = true
 function MainScene:testKeypad(event)
-    print("event.name:"..event.name,"event.key:"..event.key)
-    gravity = -gravity
+    print("event.name:"..event.name,"event.key:"..event.key,audio.isMusicPlaying())
+    if(playing) then
+      audio.pauseMusic()
+    else
+      audio.resumeMusic()
+    end
+
+    playing = not playing
 end 
 
 
