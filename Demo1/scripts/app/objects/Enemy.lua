@@ -48,7 +48,7 @@ function Enemy:update()
 
 		local nextstep = self:getPositionInCCPoint();
 		nextstep = add(self.speed,nextstep)
-		self:pos(nextstep.x, nextstep.y)
+		self:setPosition(nextstep)
 		self:wave()
 		-- self.speed = add(self.speed,gravity)
 	end

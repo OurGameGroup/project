@@ -55,13 +55,10 @@ function Bullet:update()
 
 		local nextstep = self:getPositionInCCPoint();
 		nextstep = add(self.speed,nextstep)
-		self:pos(nextstep.x, nextstep.y)
+		self:setPosition(nextstep)
 
 		self.speed = add(self.speed,gravity)
 	end
-end
-
-function Bullet:countingSpeed()
 end
 
 
