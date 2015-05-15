@@ -6,6 +6,7 @@ local MainScene = class("MainScene", function()
 end)
 
 ClassBullet = require("app/objects/Bullet")
+ClassEnemy = require("app/objects/Enemy")
 require("app/layer/BackgroundLayer")
 
 
@@ -77,6 +78,10 @@ function MainScene:onTouch(name,x,y,prevX,prevY)
         
 
         table.insert(self._listBullet, bullet)
+
+        local enemy = ClassEnemy.new()
+        self:addChild(enemy)
+        enemy:init(x,y)
 
 	end	
 	return true
