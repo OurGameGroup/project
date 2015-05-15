@@ -53,7 +53,7 @@ end
 function Bullet:update()
 	if (self.inited) then
 
-		nextstep = self:getPositionInCCPoint();
+		local nextstep = self:getPositionInCCPoint();
 		nextstep = add(self.speed,nextstep)
 		self:pos(nextstep.x, nextstep.y)
 

@@ -9,8 +9,8 @@ ClassBullet = require("app/objects/Bullet")
 ClassEnemy = require("app/objects/Enemy")
 require("app/layer/BackgroundLayer")
 
-
-CCNode:create()
+frame = 60
+counting = 0
 
 function MainScene:ctor()
 
@@ -38,24 +38,50 @@ function MainScene:ctor()
 
 
   self._scheduler = require("framework.scheduler")
-	self._scheduler.scheduleGlobal(handler(self, self.update), 1/60)
+	self._scheduler.scheduleGlobal(handler(self, self.update), 1/frame)
 
 
-    self._listBullet = {} 
+  self._listBullet = {} 
+  self._listEnemy = {}
 
 end
 
 
-function MainScene:update()
-    for i,bullet in ipairs(self._listBullet) do
-        bullet:update()
 
-        if (bullet:outOfScreen(100)) then
-          table.remove(self._listBullet, i)
-          i = i - 1;
-          self:removeChild(bullet)  
-        end
-    end   
+function MainScene:update()
+  if (counting >= frame * 3 ) then 
+    local position = randomVector(0, display.cy, display.width, display.height)
+    local enemy = ClassEnemy.new()
+    self:addChild(enemy)
+    enemy:init(position.x,position.y)
+    table.insert(self._listEnemy, enemy)
+
+    counting = 0
+
+  else
+    counting = counting + 1
+  end
+
+
+  for i,bullet in ipairs(self._listBullet) do
+    bullet:update()
+
+    if (bullet:outOfScreen(100)) then
+      table.remove(self._listBullet, i)
+      i = i - 1
+      self:removeChild(bullet)  
+    end
+  end
+
+  for i,enemy in ipairs(self._listEnemy) do
+    enemy:update()
+
+    if(enemy:outOfScreen(100)) then
+      table.remove(self._listEnemy,i)
+      i = i - 1
+      self:removeChild(enemy)
+    end
+  end 
 end
 
 
@@ -72,18 +98,14 @@ function MainScene:onTouch(name,x,y,prevX,prevY)
     
 	if name == TouchEventString.began then
 
-        local bullet = ClassBullet.new()
-        self:addChild(bullet)
-        bullet:init(x,y)
+    local bullet = ClassBullet.new()
+    self:addChild(bullet)
+    bullet:init(x,y)
         
 
-        table.insert(self._listBullet, bullet)
-
-        local enemy = ClassEnemy.new()
-        self:addChild(enemy)
-        enemy:init(x,y)
-
+    table.insert(self._listBullet, bullet)
 	end	
+
 	return true
 end
 
