@@ -57,6 +57,11 @@ function Bullet:update()
 		nextstep = add(self.speed,nextstep)
 		self:setPosition(nextstep)
 
+
+		self:rotation(180 - math.deg(self.speed:getAngle()))
+
+		print(self:getRotation(),180 - math.deg(self.speed:getAngle()))
+
 		self.speed = add(self.speed,gravity)
 	end
 end

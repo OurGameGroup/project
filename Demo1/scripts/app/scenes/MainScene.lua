@@ -17,6 +17,14 @@ kill = 0
 playSound= false
 
 function MainScene:ctor()
+
+
+  fun1()
+  fun2()
+  fun1()
+  fun2()
+
+
   audio.preloadMusic("dungeon.mp3")
   audio.playMusic("dungeon.mp3", true)
   audio.preloadSound("coin.mp3")
@@ -66,6 +74,8 @@ end
 
 
 function MainScene:update()
+
+
   if(startSpeed <= 30) then
     startSpeed = startSpeed + 1
   end
@@ -118,9 +128,11 @@ function MainScene:update()
           self:removeChild(bullet)
           kill = kill + 1
 
-          
           playSound = true
+
+          break
         end
+
 
     end
   end
@@ -175,6 +187,23 @@ function MainScene:testKeypad(event)
     playing = not playing
 end 
 
+
+
+local data = 100
+
+function fun1()
+  print(data)
+  data = data +50
+end
+
+data = 200
+
+local data = data
+function fun2()
+  print(data)
+  data = data + 50
+end
+--data = 400
 
 
 return MainScene
