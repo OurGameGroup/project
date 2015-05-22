@@ -1,4 +1,4 @@
-local BackgroundLayer = class("BackgroundLayer", function()
+BackgroundLayer = class("BackgroundLayer", function()
     return display.newLayer()
 end)
 
@@ -8,8 +8,12 @@ require("app.GameData")
 
 function BackgroundLayer:ctor()
 	self:initBackground("background.jpg")
+	-- print ("init backgound")
 	self:initTraceLayer()
+    -- print ("init trac")
     self:initControl()
+    
+    -- print ("init control")
     self:initData()
 end
 
@@ -30,8 +34,9 @@ function BackgroundLayer:initControl()
 end
 
 function BackgroundLayer:initTraceLayer()
-    self.traceLayer = TraceLayer:new()
-    self.addChild(self.traceLayer)
+    self.traceLayer = TraceLayer.new()
+    -- print ("new wanle")
+    self:addChild(self.traceLayer)
 end
 
 function BackgroundLayer:initData()
@@ -64,7 +69,7 @@ function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
         local tracePoint = bullet:getPositionInCCPoint()
 
         self.endPoint = CCPoint(x,y)
-        local tempSpeed = subCCPoint(startPoint,self.endPoint)
+        local tempSpeed = subCCPoint(self.startPoint,self.endPoint)
         tempSpeed = numberTimesCCPoint(40/display.width,tempSpeed)
 
         while (tracePoint.y > 0) do
@@ -80,7 +85,7 @@ function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
 
         for i,tp in ipairs(trace) do
             if(i % 5 == 4)then
-                traceNodeList[count]:setPosition(tp)
+                self.traceLayer.traceNodeList[count]:setPosition(tp)
                 count = count + 1
             end
 
@@ -92,3 +97,5 @@ function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
     end
     return true
 end
+
+return BackgroundLayer

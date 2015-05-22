@@ -24,6 +24,7 @@ function MainScene:ctor()
   fun1()
   fun2()
 
+  local layer2 = BackgroundLayer:new()
 
   audio.preloadMusic("dungeon.mp3")
   audio.playMusic("dungeon.mp3", true)

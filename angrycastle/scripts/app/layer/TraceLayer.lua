@@ -1,4 +1,4 @@
-local TraceLayer = class("TracLayer", function()
+TraceLayer = class("TraceLayer", function()
     return display.newLayer()
 end)
 
@@ -7,8 +7,10 @@ function TraceLayer:ctor()
     for i=1,10 do
         local traceNode = display.newSprite("tracenode.png")
         traceNode:scale(0.2)
-        traceNode:addTo(traceLayer)
+        traceNode:addTo(self)
         table.insert(self.traceNodeList,traceNode)
     end
-    traceLayer:setVisible(false)
+    self:setVisible(false)
 end
+
+return TraceLayer
