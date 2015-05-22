@@ -1,5 +1,5 @@
 local Bullet = class("Bullet", function()
-    return display.newScene("Bullet")
+    return display.newNode()
 end)
 function Bullet:ctor()
 	local img = display.newSprite("img1.png")
