@@ -9,10 +9,11 @@ function TraceLayer:ctor()
     for i=1,10 do
         local traceNode = display.newSprite("tracenode.png")
         traceNode:scale(0.2)
+        traceNode:setVisible(false)
         traceNode:addTo(self)
         table.insert(self.traceNodeList,traceNode)
     end
-    self:setVisible(false)
+    -- self:setVisible(false)
 end
 
 function TraceLayer:getTrace(startPoint,startSpeed,gravity)
@@ -24,7 +25,7 @@ function TraceLayer:getTrace(startPoint,startSpeed,gravity)
 	while (tracePoint.y > 0) do
         tracePoint = addCCPoint(tracePoint,tempSpeed)
         table.insert(trace,tracePoint)
-        tempSpeed = addCCPoint(tempSpeed,GameData.gravity)
+        tempSpeed = addCCPoint(tempSpeed,gravity)
     end
 
 
@@ -32,17 +33,14 @@ function TraceLayer:getTrace(startPoint,startSpeed,gravity)
 end
 
 function TraceLayer:showTrace(trace)
-	local count = 1
 
-    for i,tp in ipairs(trace) do
-        if(i % 5 == 4)then
-            self.traceNodeList[count]:setPosition(tp)
-            count = count + 1
-        end
-
-        if(count > 10) then 
-            break
-        end
+    for i,tp in ipairs(self.traceNodeList) do
+        if(i * 5 < #trace)then
+            tp:setPosition(trace[i * 5])
+            tp:setVisible(true)
+        else
+        	tp:setVisible(false)
+       	end
     end
 end
 

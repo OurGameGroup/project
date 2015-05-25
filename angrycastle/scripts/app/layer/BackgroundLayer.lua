@@ -71,27 +71,12 @@ function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
         local tempSpeed = subCCPoint(self.startPoint,self.endPoint)
         tempSpeed = numberTimesCCPoint(40/display.width,tempSpeed)
 
-        while (tracePoint.y > 0) do
-            tracePoint = addCCPoint(tracePoint,tempSpeed)
-            table.insert(trace,tracePoint)
-            tempSpeed = addCCPoint(tempSpeed,GameData.gravity)
-        end
+        local trace = self.traceLayer:getTrace(tracePoint, tempSpeed, GameData.gravity)
 
         self.traceLayer:setVisible(true)
 
-        local count = 1
-        count = 1
+        self.traceLayer:showTrace(trace)
 
-        for i,tp in ipairs(trace) do
-            if(i % 5 == 4)then
-                self.traceLayer.traceNodeList[count]:setPosition(tp)
-                count = count + 1
-            end
-
-            if(count > 10) then 
-                break
-            end
-        end
 
     end
     return true
