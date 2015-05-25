@@ -19,10 +19,20 @@ playSound= false
 function MainScene:ctor()
 
 
-  fun1()
-  fun2()
-  fun1()
-  fun2()
+  -- fun1()
+  -- fun2()
+  -- fun1()
+  -- fun2()
+
+  -- local point1 = CCPoint(10, 10)
+  -- local point2 = CCPoint(point1.x,point1.y)
+  -- point2.x = 20
+  -- print (point1.x,point2.x,"test")
+
+  local point1 = CCPoint(10, 10)
+  local point2 = fun3(point1)
+  point2.x = point2.x + 5
+  print (point1.x,point2.x,"test2")
 
   local layer2 = BackgroundLayer:new()
 
@@ -205,6 +215,9 @@ function fun2()
   data = data + 50
 end
 --data = 400
-
+function fun3(point)
+  point.x = point.x + 10
+  return point
+end
 
 return MainScene

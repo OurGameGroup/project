@@ -17,3 +17,7 @@ function outOfScreen(point,range)
 
     return not (point.x > 0 - range and point.y > 0 - range and point.x < display.width + range and point.y < display.height + range)
 end
+
+function deepCopyCCPoint(point)
+	return CCPoint(point.x, point.y)
+end

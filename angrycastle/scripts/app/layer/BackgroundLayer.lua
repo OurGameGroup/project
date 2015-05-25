@@ -8,12 +8,11 @@ require("app.GameData")
 
 function BackgroundLayer:ctor()
 	self:initBackground("background.jpg")
-	-- print ("init backgound")
+
 	self:initTraceLayer()
-    -- print ("init trac")
+
     self:initControl()
-    
-    -- print ("init control")
+
     self:initData()
 end
 
