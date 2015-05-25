@@ -21,3 +21,7 @@ end
 function deepCopyCCPoint(point)
 	return CCPoint(point.x, point.y)
 end
+
+function getSpeedWithScale(startPoint,endPoint,scale)
+	return numberTimesCCPoint(scale,subCCPoint(startPoint,endPoint))
+end

@@ -13,7 +13,7 @@ function TraceLayer:ctor()
         traceNode:addTo(self)
         table.insert(self.traceNodeList,traceNode)
     end
-    -- self:setVisible(false)
+    self:setVisible(false)
 end
 
 function TraceLayer:getTrace(startPoint,startSpeed,gravity)

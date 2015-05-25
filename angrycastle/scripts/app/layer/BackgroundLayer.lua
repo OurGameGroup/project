@@ -34,7 +34,7 @@ end
 
 function BackgroundLayer:initTraceLayer()
     self.traceLayer = TraceLayer.new()
-    -- print ("new wanle")
+
     self:addChild(self.traceLayer)
 end
 
@@ -58,18 +58,18 @@ function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
         self.traceLayer:setVisible(false)
 		self.endPoint = CCPoint(x,y)		
 
-        self.speed = subCCPoint(self.startPoint,self.endPoint)
+        self.speed =  getSpeedWithScale(self.startPoint, self.endPoint, GameData.defaultSpeedScale)
 
-        self.speed = numberTimesCCPoint(40/display.width,self.speed)
 	end
 
     if name == "began" or name == "moved" then
-        local trace = {}
+
         local tracePoint = bullet:getPositionInCCPoint()
 
         self.endPoint = CCPoint(x,y)
-        local tempSpeed = subCCPoint(self.startPoint,self.endPoint)
-        tempSpeed = numberTimesCCPoint(40/display.width,tempSpeed)
+
+        local tempSpeed = getSpeedWithScale(self.startPoint, self.endPoint, GameData.defaultSpeedScale)
+
 
         local trace = self.traceLayer:getTrace(tracePoint, tempSpeed, GameData.gravity)
 
