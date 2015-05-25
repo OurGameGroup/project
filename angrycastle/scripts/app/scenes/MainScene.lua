@@ -28,7 +28,7 @@ function MainScene:ctor()
 
 
     self._scheduler = require("framework.scheduler")
-    self._scheduler.scheduleGlobal(handler(self, self.update), 1/60)
+    self._scheduler.scheduleGlobal(handler(self, self.update), 1/GameData.fps)
 
 end
 
