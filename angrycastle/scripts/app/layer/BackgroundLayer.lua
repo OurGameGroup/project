@@ -6,6 +6,8 @@ require("app.Layer.TraceLayer")
 require("app.Tools.MyMath")
 require("app.GameData")
 
+BulletClass = require("app.object.Bullet")
+
 function BackgroundLayer:ctor()
 	self:initBackground("background.jpg")
 
@@ -50,7 +52,7 @@ end
 function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
 
 	if name == "began" then
-
+        -- print(x,y)
 		self.startPoint = CCPoint(x,y)
 
 	elseif name == "cancel" or name == "ended" then
@@ -64,7 +66,7 @@ function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
 
     if name == "began" or name == "moved" then
 
-        local tracePoint = bullet:getPositionInCCPoint()
+        local tracePoint = GameData.towerTop
 
         self.endPoint = CCPoint(x,y)
 

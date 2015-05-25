@@ -8,8 +8,8 @@ function Enemy:ctor()
 	self:addChild(self.img)
 end
 
-function Enemy:init(x,y)
-	self:pos(x,y)
+function Enemy:init(pos)
+	self:setPosition(pos)
 	self.speed = CCPoint(-1, 0)
 end
 
