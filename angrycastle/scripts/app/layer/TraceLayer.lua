@@ -35,8 +35,8 @@ end
 function TraceLayer:showTrace(trace)
 
     for i,tn in ipairs(self.traceNodeList) do
-        if(i * 5 - 4 < #trace)then
-            tn:setPosition(trace[i * 5 - 4])
+        if(i * 3 - 2 < #trace)then
+            tn:setPosition(trace[i * 3 - 2])
             tn:setVisible(true)
         else
         	tn:setVisible(false)

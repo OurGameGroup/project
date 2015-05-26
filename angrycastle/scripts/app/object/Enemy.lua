@@ -1,7 +1,7 @@
 local Enemy = class("Enemy", function()
     return display.newNode()
 end)
-
+require("app.Tools.MyMath")
 function Enemy:ctor()
 	self.img = display.newSprite("enemy.png")
 	self:scale(0.3)
@@ -11,11 +11,11 @@ end
 function Enemy:init(pos)
 	self:setPosition(pos)
 	self.speed = CCPoint(-1, 0)
+	self.underTowerTime = 0
 end
 
 function Enemy:update()
-	-- self:SetPositionX(addCCPoint(self:getPositionInCCPoint(), self.speed).x)
-	self:setPositionX(self:getPositionX() - 1)
+	self:setPosition(addCCPoint(self.speed, self:getPositionInCCPoint()))
 end
 	
 

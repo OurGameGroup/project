@@ -5,11 +5,14 @@ end)
 require("app.Layer.TraceLayer")
 require("app.Tools.MyMath")
 require("app.GameData")
+require("app.object.Castle")
 
 BulletClass = require("app.object.Bullet")
 
 function BackgroundLayer:ctor()
-	self:initBackground("background.jpg")
+	self:initBackground("background.png")
+
+    self:initTower()
 
 	self:initTraceLayer()
 
@@ -22,6 +25,12 @@ function BackgroundLayer:initBackground(name)
 	self.background = display.newSprite(name)
 	self.background:pos(display.cx,display.cy)
     self:addChild(self.background)
+end
+
+function BackgroundLayer:initTower()
+    self.castle = Castle.new()
+    self.castle:init(CCPoint(100, 180))
+    self:addChild(self.castle)
 end
 
 function BackgroundLayer:initControl()
@@ -52,7 +61,7 @@ end
 function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
 
 	if name == "began" then
-        -- print(x,y)
+        
 		self.startPoint = CCPoint(x,y)
 
 	elseif name == "cancel" or name == "ended" then
@@ -66,12 +75,11 @@ function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
 
     if name == "began" or name == "moved" then
 
-        local tracePoint = GameData.towerTop
+        local tracePoint = self.castle:getTowerTop()
 
         self.endPoint = CCPoint(x,y)
 
         local tempSpeed = getSpeedWithScale(self.startPoint, self.endPoint, GameData.defaultSpeedScale)
-
 
         local trace = self.traceLayer:getTrace(tracePoint, tempSpeed, GameData.gravity)
 
