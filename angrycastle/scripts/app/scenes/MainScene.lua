@@ -9,6 +9,7 @@ require("app.GameData")
 
 require("app.object.Castle")
 
+BulletClass = require("app.object.Bullet")
 EnemyClass = require("app.object.Enemy")
 
 function MainScene:ctor()

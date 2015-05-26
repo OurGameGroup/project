@@ -7,8 +7,6 @@ require("app.Tools.MyMath")
 require("app.GameData")
 require("app.object.Castle")
 
-BulletClass = require("app.object.Bullet")
-
 function BackgroundLayer:ctor()
 	self:initBackground("background.png")
 
