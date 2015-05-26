@@ -18,7 +18,6 @@ function Castle:damage()
 	self:showDamage()
 	if(self.hp < 0)then
 		print "GameOver"
-
 	end
 end
 
