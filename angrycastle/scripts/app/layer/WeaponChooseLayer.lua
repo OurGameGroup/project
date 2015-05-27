@@ -7,14 +7,15 @@ function WeaponChooseLayer:ctor()
 	-- self:addChild(self.img)
 	-- self:pos(display.cx,display.cy)
   self:init()
-  self.bulletType = 1 
+  self.bulletType = 1
+  self.changeBulletType = false
 end
 
 function WeaponChooseLayer:init()
 	self.weaponOne = cc.ui.UIPushButton.new({ normal = "bullet.png",pressed = "bulletPushed.png",})
    		:onButtonClicked(
    			function ()
-   				-- print("start")
+   				self.changeBulletType = true
           self.bulletType = 1
    			end
    		)
@@ -25,7 +26,7 @@ function WeaponChooseLayer:init()
    self.weaponTwo = cc.ui.UIPushButton.new({ normal = "bullet2.png",pressed = "bullet2Pushed.png",})
       :onButtonClicked(
         function ()
-          -- print("start")
+          self.changeBulletType = true
           self.bulletType = 2
         end
       )
