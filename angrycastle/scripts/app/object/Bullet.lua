@@ -5,8 +5,14 @@ end)
 require("app.Tools.MyMath")
 require("app.GameData")
 
-function Bullet:ctor()
-	self.img = display.newSprite("bullet.png")
+function Bullet:ctor(bulletType)
+	local bulletName
+	if(bulletType == 1)then
+		bulletName = "bullet.png"
+	else
+		bulletName = "bullet2.png"
+	end
+	self.img = display.newSprite(bulletName)
 	self.img:scale(0.1)
 	self:addChild(self.img)
 end

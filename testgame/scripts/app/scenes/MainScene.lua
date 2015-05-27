@@ -4,8 +4,9 @@ local MainScene = class("MainScene", function()
 end)
 
 function MainScene:ctor()
-   	display.newSprite("Image/background.jpg")
+   	local back = display.newSprite("Image/background.jpg")
    	:pos(display.cx, display.cy)
+    :scale(0.666)
    	:addTo(self);
 
 

@@ -9,6 +9,8 @@ require("app.GameData")
 
 require("app.object.Castle")
 
+require("app.layer.WeaponChooseLayer")
+
 BulletClass = require("app.object.Bullet")
 EnemyClass = require("app.object.Enemy")
 
@@ -17,6 +19,9 @@ function MainScene:ctor()
     self.backgroundLayer = BackgroundLayer.new()
     self:addChild(self.backgroundLayer)
     
+    self.weaponChooseLayer = WeaponChooseLayer.new()
+    self:addChild(self.weaponChooseLayer)
+
     self.enemyList = {}
     self.bulletList = {}
 
@@ -60,7 +65,7 @@ function MainScene:update()
 
     if self.backgroundLayer.shoot then
 
-        local bullet = BulletClass.new()
+        local bullet = BulletClass.new(self.weaponChooseLayer.bulletType)
         bullet:init(self.backgroundLayer.castle:getTowerTop(),self.backgroundLayer.speed)
         self:addChild(bullet)
         table.insert(self.bulletList,bullet)
