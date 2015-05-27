@@ -20,15 +20,19 @@ function MainScene:ctor()
     self.enemyList = {}
     self.bulletList = {}
 
-
     self._scheduler = require("framework.scheduler")
-    self._scheduler.scheduleGlobal(handler(self, self.update), 1/GameData.fps)
+    self.handle = self._scheduler.scheduleGlobal(handler(self, self.update), 1/GameData.fps)
 
 end
 
 count = 0
 
 function MainScene:update()
+    if(self:GameOver())then
+        display.replaceScene(require("app.scenes.StartScene").new(), "fade", 2.0, display.COLOR_WHITE)
+        self._scheduler.unscheduleGlobal(self.handle)
+ 
+    else
     if count == 50 then
         local enemy = EnemyClass.new()
         enemy:init(GameData.enemyBase)
@@ -94,6 +98,12 @@ function MainScene:update()
             end
         end
     end
+    
+    end
+end
+
+function MainScene:GameOver()
+    return self.backgroundLayer.castle.gameover
 end
 
 return MainScene

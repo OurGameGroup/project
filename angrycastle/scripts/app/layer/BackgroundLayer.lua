@@ -43,7 +43,6 @@ end
 
 function BackgroundLayer:initTraceLayer()
     self.traceLayer = TraceLayer.new()
-
     self:addChild(self.traceLayer)
 end
 
