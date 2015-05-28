@@ -41,7 +41,7 @@ function MainScene:update()
         display.replaceScene(require("app.scenes.StartScene").new(), "fade", 2.0, display.COLOR_WHITE)
         self._scheduler.unscheduleGlobal(self.handle)
  
-    else
+    end
 
     if count == 50 or count == 100 then
         local enemy = EnemyClass.new()
@@ -134,7 +134,6 @@ function MainScene:update()
         end
     end
     
-    end
 end
 
 function MainScene:GameOver()
