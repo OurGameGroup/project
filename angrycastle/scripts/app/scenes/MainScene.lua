@@ -40,9 +40,16 @@ function MainScene:update()
     if(self:GameOver())then
         display.replaceScene(require("app.scenes.StartScene").new(), "fade", 2.0, display.COLOR_WHITE)
         self._scheduler.unscheduleGlobal(self.handle)
- 
     end
 
+    self:createNewObject()
+    self:updatePosition()
+    self:checkHit()
+    self:makeEffect()
+end
+
+function MainScene:createNewObject()
+    
     if count == 50 or count == 100 then
         local enemy = EnemyClass.new()
         enemy:init(GameData.enemyBase)
@@ -70,23 +77,7 @@ function MainScene:update()
         count = 0
     end
 
-
     count = count + 1
-
-    
-
-    for i,enemy in ipairs(self.enemyList) do
-        enemy:update()
-
-        if(self.backgroundLayer.castle:underTower(enemy:getPositionInCCPoint())) then
-            enemy.speed = CCPoint(0, 0)
-            enemy.underTowerTime = enemy.underTowerTime + 1
-            
-            if(enemy.underTowerTime % GameData.fps == 0) then
-                self.backgroundLayer.castle:damage()
-            end
-        end
-    end
 
     if self.backgroundLayer.shoot then
 
@@ -102,38 +93,56 @@ function MainScene:update()
             self.autoFireBulletSpeed2 = self.backgroundLayer.speed
         end
     end
+end
+
+function MainScene:updatePosition()
+    for i,enemy in ipairs(self.enemyList) do
+        enemy:update()
+    end
 
     for i,bullet in ipairs(self.bulletList) do
-
         bullet:update()
+    end
+end
 
-        if(outOfScreen(bullet:getPositionInCCPoint(),10)) then
-            self:removeChild(bullet)
-            table.remove(self.bulletList,i)
-            i = i - 1
-
-        else
-
-            for j,enemy in ipairs(self.enemyList) do
-                local distance = subCCPoint(bullet:getPositionInCCPoint(), enemy:getPositionInCCPoint())
-                if (distance:getLengthSq() < 1000) then
-
-                    self.backgroundLayer.speed = CCPoint(0,0)
-                    self.backgroundLayer.shoot = false
-                
-                    self:removeChild(enemy)
-                    table.remove(self.enemyList,j)
-
-                    self:removeChild(bullet)
-                    table.remove(self.bulletList,i)
-                    i = i - 1
-
-                    break
-                end
+function MainScene:checkHit()
+    for i,bullet in ipairs(self.bulletList) do
+        for j,enemy in ipairs(self.enemyList) do
+            local distance = subCCPoint(bullet:getPositionInCCPoint(), enemy:getPositionInCCPoint())
+            if (distance:getLengthSq() < 1000) then
+                bullet.hit = true
+                enemy.killed = true
             end
         end
     end
-    
+
+    for j,enemy in ipairs(self.enemyList) do
+        enemy.underTower = self.backgroundLayer.castle:underTower(enemy:getPositionInCCPoint())
+    end
+end
+
+function MainScene:makeEffect()
+    for i,bullet in ipairs(self.bulletList) do
+        if(bullet.hit or outOfScreen(bullet:getPositionInCCPoint(),10))then
+            self:removeChild(bullet)
+            table.remove(self.bulletList,i)
+            i = i - 1
+        end
+    end
+
+    for i,enemy in ipairs(self.enemyList) do
+        if(enemy.underTower) then
+            if(enemy.underTowerTime % GameData.fps == 0) then
+                self.backgroundLayer.castle:damage()
+            end
+        end
+
+        if(enemy.killed)then
+            self:removeChild(enemy)
+            table.remove(self.enemyList,i)
+            i = i - 1
+        end
+    end
 end
 
 function MainScene:GameOver()

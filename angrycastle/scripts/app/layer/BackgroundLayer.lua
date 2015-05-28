@@ -62,11 +62,12 @@ function BackgroundLayer:onTouch(name,x,y,prevX,prevY)
 		self.startPoint = CCPoint(x,y)
 
 	elseif name == "cancel" or name == "ended" then
-        self.shoot = true
+        
         self.traceLayer:setVisible(false)
 		self.endPoint = CCPoint(x,y)		
 
-        self.speed =  getSpeedWithScale(self.startPoint, self.endPoint, GameData.defaultSpeedScale)
+        self.speed = getSpeedWithScale(self.startPoint, self.endPoint, GameData.defaultSpeedScale)
+        self.shoot = true
 
 	end
 

@@ -15,6 +15,7 @@ function Bullet:ctor(bulletType)
 	self.img = display.newSprite(bulletName)
 	self.img:scale(0.1)
 	self:addChild(self.img)
+	self.hit = false
 end
 
 function Bullet:init(pos,speed)
