@@ -25,3 +25,9 @@ end
 function getSpeedWithScale(startPoint,endPoint,scale)
 	return numberTimesCCPoint(scale,subCCPoint(startPoint,endPoint))
 end
+
+function hitN2N(ccnode1,ccnode2)
+	rect1 = ccnode1:getCascadeBoundingBox()
+	rect2 = ccnode2:getCascadeBoundingBox()
+    return rect1:intersectsRect(rect2)
+end

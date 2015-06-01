@@ -108,8 +108,7 @@ end
 function MainScene:checkHit()
     for i,bullet in ipairs(self.bulletList) do
         for j,enemy in ipairs(self.enemyList) do
-            local distance = subCCPoint(bullet:getPositionInCCPoint(), enemy:getPositionInCCPoint())
-            if (distance:getLengthSq() < 1000) then
+            if(hitN2N(bullet, enemy)) then
                 bullet.hit = true
                 enemy.killed = true
             end
