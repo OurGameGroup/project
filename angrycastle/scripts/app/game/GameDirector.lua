@@ -87,7 +87,6 @@ function GameDirector:update()
 end
 
 function GameDirector:onTouch(name,x,y,prevX,prevY)
-
 	if name == "began" then
         
 		self.startPoint = CCPoint(x,y)

@@ -7,12 +7,13 @@ require("app.game.GameDirector")
 
 
 function MainScene:ctor()
+    self:initControl()
 
     self.gameDirector = GameDirector.new()
-    self.gameDirector:init(self)
 
+    self.gameDirector:init(self)
+    
     self:initUpdate()
-    self:initControl()
 
 end
 
@@ -32,9 +33,6 @@ function MainScene:initControl()
     layer:setTouchSwallowEnabled(false)
     self:addChild(layer)
 end
-
-
-count = 0
 
 function MainScene:update()
     if(self.gameDirector:GameOver())then
