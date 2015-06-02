@@ -127,7 +127,7 @@ function GameDirector:GameOver()
 end
 
 function GameDirector:createNewObject()
-    if self.count == 50 or self.count == 100 then
+    if self.count == 100 or self.count == 200 then
         local enemy = EnemyClass.new()
         enemy:init(GameData.enemyBase)
         self.scene:addChild(enemy)
@@ -146,7 +146,7 @@ function GameDirector:createNewObject()
         self.autoFireBulletType = 3 - self.weaponChooseLayer.bulletType
     end
 
-    if self.count == 100 then
+    if self.count == 200 then
         local bullet = BulletClass.new(self.autoFireBulletType)
         bullet:init(self.castle:getTowerTop(),tempSpeed)
         self.scene:addChild(bullet)
@@ -174,7 +174,7 @@ end
 
 function GameDirector:updatePosition()
     for i,enemy in ipairs(self.enemyList) do
-        enemy:update()
+        enemy:updatePosition()
     end
 
     for i,bullet in ipairs(self.bulletList) do
@@ -208,13 +208,15 @@ function GameDirector:makeEffect()
     end
 
     for i,enemy in ipairs(self.enemyList) do
+        enemy:updateByStatus()
+
         if(enemy.underTower) then
             if(enemy.underTowerTime % GameData.fps == 0) then
                 self.castle:damage()
             end
         end
 
-        if(enemy.killed)then
+        if(enemy.hp < 0)then
             self.scene:removeChild(enemy)
             table.remove(self.enemyList,i)
             i = i - 1

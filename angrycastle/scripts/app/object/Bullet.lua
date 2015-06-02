@@ -31,10 +31,11 @@ end
 
 function Bullet:hitTo(enemy)
 	if self.type == 1 then
-		enemy.killed = true
+		enemy.burning = true
+		enemy.burningTime = 120
 	else
 		enemy.frozen = true
-		enemy.frozenTime = 60
+		enemy.frozenTime = 120
 	end
 end
 
