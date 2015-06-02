@@ -6,7 +6,6 @@ require("app.GameData")
 
 function Castle:ctor()
  	self:scale(0.25)
- 	self.gameover = false
 end
 
 function Castle:init(pos)
@@ -17,10 +16,6 @@ end
 function Castle:damage()
 	self.hp = self.hp - 1
 	self:showDamage()
-	if(self.hp < 0)then
-		print "GameOver"
-		self.gameover = true
-	end
 end
 
 function Castle:getTowerTop()

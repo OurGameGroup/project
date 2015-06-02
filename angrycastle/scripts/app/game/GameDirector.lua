@@ -123,7 +123,7 @@ function GameDirector:showTrace()
 end
 
 function GameDirector:GameOver()
-    return self.castle.gameover
+    return (self.castle.hp < 0)
 end
 
 function GameDirector:createNewObject()
@@ -187,7 +187,8 @@ function GameDirector:checkHit()
         for j,enemy in ipairs(self.enemyList) do
             if(hitN2N(bullet, enemy)) then
                 bullet.hit = true
-                enemy.killed = true
+                -- enemy.killed = true
+                bullet:hitTo(enemy)
             end
         end
     end
