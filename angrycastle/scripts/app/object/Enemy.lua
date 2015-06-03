@@ -3,9 +3,11 @@ local Enemy = class("Enemy", function()
 end)
 require("app.Tools.MyMath")
 function Enemy:ctor()
-	self.img = display.newSprite("enemy.png")
-	self:scale(0.3)
-	self:addChild(self.img)
+	self:initAnimation()
+
+	-- self.img = display.newSprite("enemy.png")
+	self:scale(0.2)
+	-- self:addChild(self.img)
 	self.hp = 6
 
 	self.underTower = false
@@ -16,12 +18,28 @@ function Enemy:ctor()
 
 	self.burning = false
 	self.burningTime = 0
+
+	
 end
 
 function Enemy:init(pos)
 	self:setPosition(pos)
 	self.normalSpeed = CCPoint(-1, 0)
 	self.speed = deepCopyCCPoint(self.normalSpeed)
+end
+
+function Enemy:initAnimation()
+	CCArmatureDataManager:sharedArmatureDataManager():addArmatureFileInfo("Enemy/enemy.ExportJson")
+
+    self._armature = CCArmature:create("enemy")   -- 根据name创建动作（寻找动作序列中名为name的动作）
+
+    self._armature:getAnimation():setSpeedScale(0.7)     ---------设定动作的播放速度  百分比  可选
+
+    -- self._armature:scale(0.1)
+
+    self:addChild(self._armature)
+
+ 	self._armature:getAnimation():play("Animation1",-1,-1)
 end
 
 function Enemy:updatePosition()

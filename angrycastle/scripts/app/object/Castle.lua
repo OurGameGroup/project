@@ -32,11 +32,13 @@ function Castle:showDamage()
 		size  = 60,
 		color = ccc3(255, 0, 0),
 		align = ui.TEXT_ALIGN_RIGHT,
-		x     = self:getTowerTop().x,
-		y     = self:getTowerTop().y,
+		x     = 200,
+		y     = 600,
 		outlineColor = ccc3(255, 255, 0)
 		})
 	self:addChild(labelTTF)
+
+	-- print(self:getBoundingBox().size.height)
 
 	local move1 = CCMoveBy:create(1, CCPoint(50, 50))
    	local move2 = CCFadeOut:create(1)
