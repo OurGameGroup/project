@@ -39,4 +39,12 @@ function Bullet:hitTo(enemy)
 	end
 end
 
+function Bullet:hitGround(ground)
+	if(self:getPositionY() < ground:getPositionY()) then
+		ground:showEffect(self.type,self:getPositionX())
+		return true
+	end
+	return false
+end
+
 return Bullet

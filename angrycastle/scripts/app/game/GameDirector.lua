@@ -5,6 +5,7 @@ require("app.Layer.WeaponChooseLayer")
 require("app.Tools.MyMath")
 require("app.GameData")
 require("app.object.Castle")
+require("app.object.Ground")
 EnemyClass = require("app.object.Enemy")
 BulletClass = require("app.object.Bullet")
 
@@ -16,6 +17,8 @@ function GameDirector:init(scene)
     self.scene = scene
 
     self:initBackground("background.png")
+
+    self:initGround()
 
     self:initTower()
 
@@ -35,6 +38,12 @@ function GameDirector:initBackground(name)
 	self.background = display.newSprite(name)
 	self.background:pos(display.cx,display.cy)
     self.scene:addChild(self.background)
+end
+
+function GameDirector:initGround()
+    self.ground = Ground.new()
+    self.ground:init(CCPoint(display.cx,100))
+    self.scene:addChild(self.ground)
 end
 
 function GameDirector:initTower()
@@ -193,8 +202,15 @@ function GameDirector:checkHit()
         end
     end
 
+    for i,bullet in ipairs(self.bulletList) do
+        if(bullet:hitGround(self.ground)) then
+            bullet.hit = true
+        end
+    end
+
     for j,enemy in ipairs(self.enemyList) do
         enemy.underTower = self.castle:underTower(enemy:getPositionInCCPoint())
+        self.ground:giveEffect(enemy)
     end
 end
 
@@ -222,6 +238,8 @@ function GameDirector:makeEffect()
             i = i - 1
         end
     end
+
+    self.ground:update()
 end
 
 return GameDirector

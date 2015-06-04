@@ -6,7 +6,7 @@ function Enemy:ctor()
 	self:initAnimation()
 
 	-- self.img = display.newSprite("enemy.png")
-	self:scale(0.2)
+	-- self:scale(0.2)
 	-- self:addChild(self.img)
 	self.hp = 6
 
@@ -35,7 +35,7 @@ function Enemy:initAnimation()
 
     self._armature:getAnimation():setSpeedScale(0.7)     ---------设定动作的播放速度  百分比  可选
 
-    -- self._armature:scale(0.1)
+    self._armature:scale(0.1)
 
     self:addChild(self._armature)
 
@@ -79,7 +79,7 @@ end
 function Enemy:showDamage()
 	local labelTTF = ui.newTTFLabelWithOutline({
 		text  = "-1",
-		size  = 60,
+		size  = 20,
 		color = ccc3(255, 0, 0),
 		align = ui.TEXT_ALIGN_RIGHT,
 		x     = 0,
