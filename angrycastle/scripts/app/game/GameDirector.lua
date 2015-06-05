@@ -135,6 +135,8 @@ function GameDirector:GameOver()
     return (self.castle.hp < 0)
 end
 
+
+
 function GameDirector:createNewObject()
     if self.count == 100 or self.count == 200 then
         local enemy = EnemyClass.new()
@@ -227,7 +229,9 @@ function GameDirector:makeEffect()
         enemy:updateByStatus()
 
         if(enemy.underTower) then
-            if(enemy.underTowerTime % GameData.fps == 0) then
+            enemy:setState("stand")
+            if(enemy.underTowerTime % (GameData.fps * 2) == 0) then
+                enemy:setState("attack")
                 self.castle:damage()
             end
         end

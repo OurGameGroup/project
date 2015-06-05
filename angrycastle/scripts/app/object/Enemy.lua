@@ -23,23 +23,48 @@ function Enemy:ctor()
 end
 
 function Enemy:init(pos)
-	self:setPosition(pos)
+	-- self:setPosition(pos)
+	local yOrder = math.ceil(randomNumber(0, 60))
+	self:setZOrder(60 - yOrder)
+	self:pos(pos.x,pos.y+yOrder)
 	self.normalSpeed = CCPoint(-1, 0)
 	self.speed = deepCopyCCPoint(self.normalSpeed)
+	self.state = "running"
+	self.interruptable = true
 end
 
 function Enemy:initAnimation()
-	CCArmatureDataManager:sharedArmatureDataManager():addArmatureFileInfo("Enemy/enemy.ExportJson")
+	CCArmatureDataManager:sharedArmatureDataManager():addArmatureFileInfo("Enemy/enemy1.ExportJson")
 
-    self._armature = CCArmature:create("enemy")   -- 根据name创建动作（寻找动作序列中名为name的动作）
+    self._armature = CCArmature:create("enemy1")   -- 根据name创建动作（寻找动作序列中名为name的动作）
 
-    self._armature:getAnimation():setSpeedScale(0.7)     ---------设定动作的播放速度  百分比  可选
+    -- self._armature:getAnimation():setSpeedScale(1)     ---------设定动作的播放速度  百分比  可选
+
+    local function animationEvent(armatureBack,movementType,movementID) ------动作的回调函数
+
+		if movementType == 2 and movementID == "attack" then----- movementType 0开始  1非循环结束  2循环结束
+			self._armature:getAnimation():stop()
+			self.interruptable = true
+		end
+	end
+	self._armature:getAnimation():setMovementEventCallFunc(animationEvent)
 
     self._armature:scale(0.1)
 
     self:addChild(self._armature)
 
- 	self._armature:getAnimation():play("Animation1",-1,-1)
+ 	self._armature:getAnimation():play("running",-1,-1)
+end
+
+function Enemy:setState(state)
+	if(self.state ~= state and self.interruptable)then
+		self.state = state
+		self._armature:getAnimation():play(self.state,-1,-1)
+
+		if(self.state == "attack")then
+			self.interruptable = false
+		end
+	end
 end
 
 function Enemy:updatePosition()

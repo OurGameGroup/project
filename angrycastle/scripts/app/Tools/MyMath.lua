@@ -31,3 +31,8 @@ function hitN2N(ccnode1,ccnode2)
 	rect2 = ccnode2:getCascadeBoundingBox()
     return rect1:intersectsRect(rect2)
 end
+
+math.randomseed(os.time())
+function randomNumber(x,y)
+    return math.random(x,y)
+end
