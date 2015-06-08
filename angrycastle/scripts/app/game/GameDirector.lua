@@ -2,6 +2,7 @@ GameDirector = class("GameDirector")
 
 require("app.Layer.TraceLayer")
 require("app.Layer.WeaponChooseLayer")
+MoneyLayer = require("app.Layer.MoneyLayer")
 require("app.Tools.MyMath")
 require("app.GameData")
 require("app.object.Castle")
@@ -10,7 +11,7 @@ EnemyClass = require("app.object.Enemy")
 BulletClass = require("app.object.Bullet")
 
 function GameDirector:ctor()
-
+   
 end
 
 function GameDirector:init(scene)
@@ -33,6 +34,9 @@ function GameDirector:init(scene)
     self:initWeaponChooseLayer()
 
     self:initData()
+
+    self:initMoneyLayer();
+
 end
 
 
@@ -84,6 +88,11 @@ end
 function GameDirector:initWeaponChooseLayer()
     self.weaponChooseLayer = WeaponChooseLayer.new()
     self.scene:addChild(self.weaponChooseLayer)
+end
+
+function GameDirector:initMoneyLayer()
+    self.moneyLayer = MoneyLayer.new()
+    self.scene:addChild(self.moneyLayer)
 end
 
 function GameDirector:initData()
@@ -249,6 +258,9 @@ function GameDirector:makeEffect()
         end
 
         if(enemy.hp < 0)then
+            
+            self.moneyLayer:addMoney()
+            print(self.moneyLayer.money)
             self.scene:removeChild(enemy)
             table.remove(self.enemyList,i)
             i = i - 1
