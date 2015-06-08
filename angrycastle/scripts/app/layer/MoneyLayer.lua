@@ -8,7 +8,7 @@ function MoneyLayer:ctor()
 end
 
 function MoneyLayer:init()
-	self.mimg = display.newSprite("money.jpg")
+	self.mimg = display.newSprite("money.png")
 	self:setPosition(CCPoint(display.width*7/8, display.height*7/8))
 	self:setAnchorPoint(ccp(0,0))
 	self:scale(0.3)

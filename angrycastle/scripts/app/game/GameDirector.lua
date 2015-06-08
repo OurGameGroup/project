@@ -258,7 +258,6 @@ function GameDirector:makeEffect()
         end
 
         if(enemy.hp < 0)then
-            
             self.moneyLayer:addMoney()
             print(self.moneyLayer.money)
             self.scene:removeChild(enemy)
