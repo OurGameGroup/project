@@ -6,6 +6,7 @@ EffectClass = require("app.object.Effect")
 
 function Ground:ctor()
 	self.img = display.newSprite("ground.png")
+	self.img:setVisible(false)
 	self.effectList = {}
 	self:addChild(self.img)
 end

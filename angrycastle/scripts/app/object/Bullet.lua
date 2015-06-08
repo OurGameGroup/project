@@ -42,7 +42,7 @@ function Bullet:initAnimation(bulletType)
  end
 
 
-function Bullet:update()
+function Bullet:updatePosition()
 	self:setRotation(-math.deg(self.speed:getAngle())-90)
 	self:setPosition(addCCPoint(self:getPositionInCCPoint(), self.speed))
 	self.speed = addCCPoint(self.speed, GameData.gravity)

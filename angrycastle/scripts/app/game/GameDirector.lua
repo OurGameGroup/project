@@ -16,11 +16,13 @@ end
 function GameDirector:init(scene)
     self.scene = scene
 
-    self:initBackground("background.png")
+    self:initBackground("background.jpg")
 
     self:initGround()
 
     self:initTower()
+
+    self:initSoldier()
 
     self:initBulletLayer()
 
@@ -50,6 +52,16 @@ function GameDirector:initTower()
     self.castle = Castle.new()
     self.castle:init(CCPoint(100, 180))
     self.scene:addChild(self.castle)
+end
+
+function GameDirector:initSoldier()
+    CCArmatureDataManager:sharedArmatureDataManager():addArmatureFileInfo("Player/Player.ExportJson")
+    self.soldier = CCArmature:create("Player")
+    self.soldier:scale(0.2)
+    self.soldier:getAnimation():setSpeedScale(0.5)
+    self.soldier:pos(self.castle:getTowerTop().x,self.castle:getTowerTop().y - 20)
+    self.scene:addChild(self.soldier)
+    self.soldier:getAnimation():play("magic",-1,-1)
 end
 
 function GameDirector:initBulletLayer()
@@ -168,7 +180,7 @@ function GameDirector:createNewObject()
     self.count = self.count + 1
 
     if self.shoot then
-
+        self.soldier:getAnimation():play("magic",-1,-1)
         local bullet = BulletClass.new(self.weaponChooseLayer.bulletType)
         bullet:init(self.castle:getTowerTop(),self.speed)
         self.scene:addChild(bullet)
@@ -189,7 +201,7 @@ function GameDirector:updatePosition()
     end
 
     for i,bullet in ipairs(self.bulletList) do
-        bullet:update()
+        bullet:updatePosition()
     end
 end
 

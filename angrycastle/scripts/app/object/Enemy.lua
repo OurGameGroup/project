@@ -79,10 +79,12 @@ function Enemy:updateByStatus()
 
 	if self.frozen then
 		self.speed = numberTimesCCPoint(0.2, self.normalSpeed)
+		self._armature:getAnimation():setSpeedScale(0.2)
 		self.frozenTime = self.frozenTime - 1
 		if(self.frozenTime < 0)then
 			self.frozen = false
 			self.speed = deepCopyCCPoint(self.normalSpeed)
+			self._armature:getAnimation():setSpeedScale(1)
 		end
 	end
 
