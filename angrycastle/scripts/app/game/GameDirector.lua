@@ -20,9 +20,9 @@ function GameDirector:init(scene)
 
     self:initBackground("background.jpg")
 
-    self:initGround()
-
     self:initTower()
+
+    self:initGround()
 
     self:initSoldier()
 
@@ -122,10 +122,12 @@ function GameDirector:initData()
 end
 
 function GameDirector:update()
-    self:createNewObject()
-    self:updatePosition()
-    self:checkHit()
-    self:makeEffect()
+    if(self.weaponChooseLayer.pause == false)then
+        self:createNewObject()
+        self:updatePosition()
+        self:checkHit()
+        self:makeEffect()
+    end
 end
 
 function GameDirector:onTouch(name,x,y,prevX,prevY)

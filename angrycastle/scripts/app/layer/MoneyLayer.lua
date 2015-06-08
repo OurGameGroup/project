@@ -24,7 +24,6 @@ function MoneyLayer:init()
 		outlineColor = ccc3(255, 255, 0)
 		})
 	self:addChild(self.labelTTF)
-	
 end
 
 function MoneyLayer:addMoney()
