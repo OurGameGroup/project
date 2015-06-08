@@ -170,10 +170,6 @@ function GameDirector:GameOver()
     return (self.castle.hp < 0)
 end
 
-function GameDirector:addAccomplishment()
-    self.accomplishmentLayer:addAccomplishment()
-end
-
 function GameDirector:createNewObject()
     if self.count == 100 or self.count == 200 then
         local enemy = EnemyClass.new()
@@ -280,23 +276,34 @@ function GameDirector:makeEffect()
         end
     end
 
-
-    if self.moneyLayer.money == 10 then
-       self.accomplishmentLayer:addAccomplishmentFirstBlood()
-       --.accomplishmentLayer:removeAccomplishmentFirstBlood()
+    if self.accomplishmentLayer.firstBloodRemoved == false then
+       if self.moneyLayer.money >= 10 then
+            self.accomplishmentLayer:addAccomplishmentFirstBlood()
+       end
     end
 
-     if self.moneyLayer.money == 30  then
-       self.accomplishmentLayer:addAccomplishmentTenEnemy()
-       --self.accomplishmentLayer:removeAccomplishmentTenEnemy()
+     if self.accomplishmentLayer.tenEnemyRemoved == false  then
+        if self.moneyLayer.money >= 30 then
+            self.accomplishmentLayer:addAccomplishmentTenEnemy()
+        end
+        
     end
 
-    if self.moneyLayer.money == 50 then
-        self.accomplishmentLayer:addAccomplishmentThousandCoins()
-       --self.accomplishmentLayer:removeAccomplishmentThousandCoins()
+    if self.accomplishmentLayer.thousandCoinsRemoved == false then
+        if self.moneyLayer.money >= 50 then
+            self.accomplishmentLayer:addAccomplishmentThousandCoins()
+        end
     end
 
     self.ground:update()
+end
+ 
+
+function GameDirector:moneyToAccomplishment(num, name)
+    if self.moneyLayer.money - num >= 0 then
+        self.name = true
+    end
+    return self.name
 end
 
 return GameDirector
