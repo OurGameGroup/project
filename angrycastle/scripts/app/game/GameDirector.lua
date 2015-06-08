@@ -2,7 +2,8 @@ GameDirector = class("GameDirector")
 
 require("app.Layer.TraceLayer")
 require("app.Layer.WeaponChooseLayer")
-MoneyLayer = require("app.Layer.MoneyLayer")
+require("app.Layer.MoneyLayer")
+require("app.Layer.AccomplishmentLayer")
 require("app.Tools.MyMath")
 require("app.GameData")
 require("app.object.Castle")
@@ -35,7 +36,9 @@ function GameDirector:init(scene)
 
     self:initData()
 
-    self:initMoneyLayer();
+    self:initMoneyLayer()
+
+    self:initAccomplishmentLayer()
 
 end
 
@@ -99,6 +102,11 @@ function GameDirector:initMoneyLayer()
     self.scene:addChild(self.moneyLayer)
 end
 
+function GameDirector:initAccomplishmentLayer()
+    self.accomplishmentLayer = AccomplishmentLayer.new()
+    self.scene:addChild(self.accomplishmentLayer)
+end
+
 function GameDirector:initData()
     self.count = 0
 	self.shoot = false
@@ -160,7 +168,9 @@ function GameDirector:GameOver()
     return (self.castle.hp < 0)
 end
 
-
+function GameDirector:addAccomplishment()
+    self.accomplishmentLayer:addAccomplishment()
+end
 
 function GameDirector:createNewObject()
     if self.count == 100 or self.count == 200 then
@@ -262,13 +272,16 @@ function GameDirector:makeEffect()
 
         if(enemy.hp < 0)then
             self.moneyLayer:addMoney()
-            print(self.moneyLayer.money)
             self.scene:removeChild(enemy)
             table.remove(self.enemyList,i)
             i = i - 1
         end
     end
 
+
+    if self.moneyLayer.money > 30  then
+       self.accomplishmentLayer:addAccomplishment()
+    end
     self.ground:update()
 end
 
