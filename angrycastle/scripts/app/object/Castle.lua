@@ -1,11 +1,11 @@
 Castle = class("Castle", function()
-    return display.newSprite("castle.png")
+    return display.newNode()
 end)
 
 require("app.GameData")
 
 function Castle:ctor()
- 	self:scale(0.25)
+	self:initAnimation()
 end
 
 function Castle:init(pos)
@@ -13,49 +13,39 @@ function Castle:init(pos)
 	self.hp = 10
 end
 
+function Castle:initAnimation()
+	CCArmatureDataManager:sharedArmatureDataManager():addArmatureFileInfo("castle/castle.ExportJson")
+	self._armature = CCArmature:create("castle")
+	self._armature:scale(0.5)
+	self._armature:getAnimation():setSpeedScale(0.3)
+    self:addChild(self._armature)
+ 	self._armature:getAnimation():play("normal_Copy1",-1,-1)
+end
 function Castle:damage()
 	self.hp = self.hp - 1
 	self:showDamage()
 end
 
 function Castle:getTowerTop()
-	return CCPoint(self:getPositionX(), self:getBoundingBox():getMaxY())
+	return CCPoint(self:getPositionX(), self:getCascadeBoundingBox():getMaxY())
 end
 
 function Castle:underTower(point)
-	return self:getBoundingBox():containsPoint(point)
+	return self:getCascadeBoundingBox():containsPoint(point)
 end
 
 function Castle:showDamage()
-	local labelTTF = ui.newTTFLabelWithOutline({
-		text  = "-1",
-		size  = 60,
-		color = ccc3(255, 0, 0),
-		align = ui.TEXT_ALIGN_RIGHT,
-		x     = 200,
-		y     = 600,
-		outlineColor = ccc3(255, 255, 0)
-		})
-	self:addChild(labelTTF)
-
-	-- print(self:getBoundingBox().size.height)
-
-	local move1 = CCMoveBy:create(1, CCPoint(50, 50))
-   	local move2 = CCFadeOut:create(1)
-
-   	local ccarray = CCArray:create()
-   	ccarray:addObject(move1)
-   	ccarray:addObject(move2)
-   	
-   	local SpawnAction = CCSpawn:create(ccarray)
-   	-- labelTTF:playAnimationOnce(SpawnAction,true)
-
-   	-- labelTTF:runAction(SpawnAction)
-   	transition.execute(labelTTF, SpawnAction, {
-   		onComplete = function ()
-   			self:removeChild(labelTTF)
-   		end
-   	})
+	if (self.hp > 8) then
+		self._armature:getAnimation():play("normal_Copy1",-1,-1)
+	elseif (self.hp > 5) then
+		self._armature:getAnimation():play("quarterLeft",-1,-1)
+	elseif (self.hp > 2) then
+		self._armature:getAnimation():play("halfLeft",-1,-1)
+	elseif (self.hp > 0) then
+		self._armature:getAnimation():play("quarterRemain",-1,-1)
+	elseif (self.hp == 0) then
+		self._armature:getAnimation():play("gameOver",-1,-1)
+	end
 end
 
 return Castle

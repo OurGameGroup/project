@@ -39,6 +39,10 @@ function GameDirector:init(scene)
 
 end
 
+function GameDirector:initMusic()
+    audio.preloadMusic("dungeon.mp3")
+    audio.playMusic("dungeon.mp3", true)
+end
 
 function GameDirector:initBackground(name)
 	self.background = display.newSprite(name)
@@ -54,7 +58,7 @@ end
 
 function GameDirector:initTower()
     self.castle = Castle.new()
-    self.castle:init(CCPoint(100, 180))
+    self.castle:init(CCPoint(120, 100))
     self.scene:addChild(self.castle)
 end
 
@@ -63,7 +67,7 @@ function GameDirector:initSoldier()
     self.soldier = CCArmature:create("Player")
     self.soldier:scale(0.2)
     self.soldier:getAnimation():setSpeedScale(0.5)
-    self.soldier:pos(self.castle:getTowerTop().x,self.castle:getTowerTop().y - 20)
+    self.soldier:pos(self.castle:getTowerTop().x,self.castle:getTowerTop().y - 40)
     self.scene:addChild(self.soldier)
     self.soldier:getAnimation():play("magic",-1,-1)
 end
@@ -219,7 +223,6 @@ function GameDirector:checkHit()
         for j,enemy in ipairs(self.enemyList) do
             if(hitN2N(bullet, enemy)) then
                 bullet.hit = true
-                -- enemy.killed = true
                 bullet:hitTo(enemy)
             end
         end

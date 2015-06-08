@@ -5,25 +5,19 @@ require("app.Tools.MyMath")
 function Enemy:ctor()
 	self:initAnimation()
 
-	-- self.img = display.newSprite("enemy.png")
-	-- self:scale(0.2)
-	-- self:addChild(self.img)
 	self.hp = 6
 
 	self.underTower = false
-	self.underTowerTime = 0
+	self.underTowerTime = -1
 
 	self.frozen = false
 	self.frozenTime = 0
 
 	self.burning = false
 	self.burningTime = 0
-
-	
 end
 
 function Enemy:init(pos)
-	-- self:setPosition(pos)
 	local yOrder = math.ceil(randomNumber(0, 60))
 	self:setZOrder(60 - yOrder)
 	self:pos(pos.x,pos.y+yOrder)

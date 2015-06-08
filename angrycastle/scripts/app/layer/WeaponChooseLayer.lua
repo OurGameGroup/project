@@ -12,7 +12,7 @@ function WeaponChooseLayer:ctor()
 end
 
 function WeaponChooseLayer:init()
-	self.weaponOne = cc.ui.UIPushButton.new({ normal = "bullet.png",pressed = "bulletPushed.png",})
+	self.weaponOne = cc.ui.UIPushButton.new({ normal = "fire.png",pressed = "firePushed.png",})
    		:onButtonClicked(
    			function ()
    				self.changeBulletType = true
@@ -20,10 +20,10 @@ function WeaponChooseLayer:init()
    			end
    		)
    		:pos(display.width/8, display.height/4*3)
-      :scale(0.2)
+      :scale(0.15)
    self:addChild(self.weaponOne)
 
-   self.weaponTwo = cc.ui.UIPushButton.new({ normal = "bullet2.png",pressed = "bullet2Pushed.png",})
+   self.weaponTwo = cc.ui.UIPushButton.new({ normal = "freeze.png",pressed = "freezePushed.png",})
       :onButtonClicked(
         function ()
           self.changeBulletType = true
@@ -31,7 +31,7 @@ function WeaponChooseLayer:init()
         end
       )
       :pos(display.width/8*2, display.height/4*3)
-      :scale(0.2)
+      :scale(0.15)
    self:addChild(self.weaponTwo)
 
 end
