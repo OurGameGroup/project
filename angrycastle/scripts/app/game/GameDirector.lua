@@ -281,9 +281,21 @@ function GameDirector:makeEffect()
     end
 
 
-    if self.moneyLayer.money > 30  then
-       self.accomplishmentLayer:addAccomplishment()
+    if self.moneyLayer.money == 10 then
+       self.accomplishmentLayer:addAccomplishmentFirstBlood()
+       self.accomplishmentLayer:removeAccomplishment()
     end
+
+     if self.moneyLayer.money == 100  then
+       self.accomplishmentLayer:addAccomplishmentTenEnemy()
+       self.accomplishmentLayer:removeAccomplishment()
+    end
+
+    if self.moneyLayer.money == 1000 then
+        self.accomplishmentLayer:addAccomplishmentThousandCoins()
+       self.accomplishmentLayer:removeAccomplishment()
+    end
+
     self.ground:update()
 end
 
