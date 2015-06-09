@@ -276,22 +276,10 @@ function GameDirector:makeEffect()
         end
     end
 
-    if self.accomplishmentLayer.firstBloodRemoved == false then
-       if self.moneyLayer.money >= 10 then
-            self.accomplishmentLayer:addAccomplishmentFirstBlood()
-       end
-    end
-
-     if self.accomplishmentLayer.tenEnemyRemoved == false  then
-        if self.moneyLayer.money >= 30 then
-            self.accomplishmentLayer:addAccomplishmentTenEnemy()
-        end
-        
-    end
-
-    if self.accomplishmentLayer.thousandCoinsRemoved == false then
-        if self.moneyLayer.money >= 50 then
-            self.accomplishmentLayer:addAccomplishmentThousandCoins()
+    for i,acmpmt in ipairs(GameData.accomplishment) do
+        if(not acmpmt.get and self.moneyLayer.money >= acmpmt.requireMoney) then
+            self.accomplishmentLayer:showAcmpmt(acmpmt.img)
+            acmpmt.get = true
         end
     end
 
