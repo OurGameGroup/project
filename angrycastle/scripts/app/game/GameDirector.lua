@@ -285,13 +285,5 @@ function GameDirector:makeEffect()
 
     self.ground:update()
 end
- 
-
-function GameDirector:moneyToAccomplishment(num, name)
-    if self.moneyLayer.money - num >= 0 then
-        self.name = true
-    end
-    return self.name
-end
 
 return GameDirector
