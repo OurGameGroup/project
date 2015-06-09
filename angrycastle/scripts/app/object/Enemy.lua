@@ -15,6 +15,7 @@ function Enemy:ctor()
 
 	self.burning = false
 	self.burningTime = 0
+
 end
 
 function Enemy:init(pos)
