@@ -20,7 +20,7 @@ function AccomplishmentLayer:showAcmpmt(name)
 
 
 	local action1 = CCScaleBy:create(0.5,1.7)
-	local action2 = CCScaleBy:create(2,1)
+	local action2 = CCDelayTime:create(2)
 	local action3 = CCFadeOut:create(1)
 	local ccarray = CCArray:create()
    	ccarray:addObject(action1)
