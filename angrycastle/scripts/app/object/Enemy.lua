@@ -127,4 +127,14 @@ function Enemy:showDamage()
    	})
 end
 
+function Enemy:getEffect(effect,effectTime)
+	if(effect == "frozen")then
+		self.frozen = true
+		self.frozenTime = effectTime
+	elseif (effect == "burning") then
+		self.burning = true
+		self.burningTime = effectTime
+	end
+end
+
 return Enemy

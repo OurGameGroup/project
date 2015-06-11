@@ -1,13 +1,14 @@
 GameDirector = class("GameDirector")
 
-require("app.Layer.TraceLayer")
-require("app.Layer.WeaponChooseLayer")
-require("app.Layer.MoneyLayer")
-require("app.Layer.AccomplishmentLayer")
+require("app.layer.TraceLayer")
+require("app.layer.WeaponChooseLayer")
+require("app.layer.MoneyLayer")
+require("app.layer.AccomplishmentLayer")
 require("app.Tools.MyMath")
 require("app.GameData")
 require("app.object.Castle")
 require("app.object.Ground")
+WeaponClass = require("app.object.Weapon")
 EnemyClass = require("app.object.Enemy")
 BulletClass = require("app.object.Bullet")
 
@@ -39,7 +40,6 @@ function GameDirector:init(scene)
     self:initMoneyLayer()
 
     self:initAccomplishmentLayer()
-
 end
 
 function GameDirector:initMusic()
@@ -79,6 +79,12 @@ function GameDirector:initBulletLayer()
     self.bulletList = {}
     self.bulletLayer = display.newNode()
     self.scene:addChild(self.bulletLayer)
+end
+
+function GameDirector:initWeaponLayer()
+    self.weaponList = {}
+    self.weaponLayer = display.newNode()
+    self.scene:addChild(self.weaponLayer)
 end
 
 function GameDirector:initEnemyLayer()
@@ -191,7 +197,9 @@ function GameDirector:createNewObject()
     end
 
     if self.count == 200 then
-        local bullet = BulletClass.new(self.autoFireBulletType)
+
+        local bullet = WeaponClass.new(1)
+
         bullet:init(self.castle:getTowerTop(),tempSpeed)
         self.scene:addChild(bullet)
         table.insert(self.bulletList,bullet)
@@ -202,7 +210,9 @@ function GameDirector:createNewObject()
 
     if self.shoot then
         self.soldier:getAnimation():play("magic",-1,-1)
-        local bullet = BulletClass.new(self.weaponChooseLayer.bulletType)
+
+        local bullet = WeaponClass.new(1)
+
         bullet:init(self.castle:getTowerTop(),self.speed)
         self.scene:addChild(bullet)
         table.insert(self.bulletList,bullet)
@@ -228,12 +238,7 @@ end
 
 function GameDirector:checkHit()
     for i,bullet in ipairs(self.bulletList) do
-        for j,enemy in ipairs(self.enemyList) do
-            if(hitN2N(bullet, enemy)) then
-                bullet.hit = true
-                bullet:hitTo(enemy)
-            end
-        end
+        bullet:hitTo(self.enemyList)
     end
 
     for i,bullet in ipairs(self.bulletList) do
@@ -243,7 +248,7 @@ function GameDirector:checkHit()
     end
 
     for j,enemy in ipairs(self.enemyList) do
-        enemy.underTower = self.castle:underTower(enemy:getPositionInCCPoint())
+        enemy.underTower = hitN2N(enemy, self.castle)
         self.ground:giveEffect(enemy)
     end
 end

@@ -14,7 +14,6 @@ function MainScene:ctor()
     self.gameDirector:init(self)
     
     self:initUpdate()
-
 end
 
 function MainScene:initUpdate()

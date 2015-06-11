@@ -3,6 +3,7 @@ Ground = class("Ground",function()
 end)
 
 EffectClass = require("app.object.Effect")
+ThunderClass = require("app.object.Thunder")
 
 function Ground:ctor()
 	self.img = display.newSprite("ground.png")
@@ -16,12 +17,30 @@ function Ground:init(pos)
 end
 
 function Ground:showEffect(type,x)
-	if(type == 1)then
+	if(type == "burning")then
 		local effect = EffectClass.new()
 		effect:init(CCPoint(x - self:getPositionX(), self:getPositionY() - 40),120)
 		self:addChild(effect)
 
 		table.insert(self.effectList, effect)
+	elseif(type == 2)then
+		local thunder = ThunderClass.new()
+		thunder:init(CCPoint(x - self:getPositionX(), self:getPositionY() - 40),120)
+		self:addChild(thunder)
+
+		local action1 = CCFadeIn:create(0.2)
+		local action2 = CCFadeOut:create(0.2)
+		local ccarray = CCArray:create()
+   		ccarray:addObject(action1)
+   		ccarray:addObject(action2)
+
+   		local SequenceAction = CCSequence:create(ccarray)
+
+		transition.execute(thunder, SequenceAction, {
+   			onComplete = function ()
+   				self:removeChild(thunder)
+   			end
+   		})
 	end
 end
 
@@ -46,6 +65,10 @@ function Ground:giveEffect(enemy)
 			end
 		end
 	end
+end
+
+function Ground:showThunder()
+	-- body
 end
 
 return Ground

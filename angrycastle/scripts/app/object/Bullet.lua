@@ -1,3 +1,5 @@
+WeaponClass = require("app.object.Weapon")
+
 local Bullet = class("Bullet",function()
     return display.newNode()
 end)
@@ -7,16 +9,7 @@ require("app.GameData")
 
 function Bullet:ctor(bulletType)
 	self.type = bulletType
-	-- local bulletName
-	-- if(bulletType == 1)then
-	-- 	bulletName = "bullet.png"
-	-- else
-	-- 	bulletName = "bullet2.png"
-	-- end
-	-- self.img = display.newSprite(bulletName)
 	self:initAnimation(bulletType)
-	-- self:scale(0.1)
-	
 	self.hit = false
 end
 
