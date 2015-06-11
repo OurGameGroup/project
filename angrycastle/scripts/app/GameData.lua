@@ -24,6 +24,7 @@ GameData.weapon = {
 		rotatable = true,
 		effect = "burning",
 		effectTime = 120, -- frame per second
+		body = "animation",
 		animation = {
 			FileName = "fireBullet/fireBullet.ExportJson",
 			Name = "fireBullet",
@@ -35,10 +36,18 @@ GameData.weapon = {
 			pressed = "firePushed.png"
 		}
 	},
-	{
+	{--frozen bullet
 		speed = CCPoint(10, 10),
-		gravity = true,
-		effect = "frozen"
+		gravityEnable = true,
+		rotatable = true,
+		effect = "frozen",
+		effectTime = 120, -- frame per second
+		body = "image",
+		image = "bullet2.png",
+		button = {
+			normal = "freeze.png",
+			pressed = "freezePushed.png"
+		}
 	}
 }
 

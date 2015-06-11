@@ -213,7 +213,7 @@ function GameDirector:createNewObject()
 
     if self.count == 200 then
 
-        local bullet = WeaponClass.new(1)
+        local bullet = WeaponClass.new(self.autoFireBulletType)
 
         bullet:init(self.castle:getTowerTop(),tempSpeed)
         self.scene:addChild(bullet)
@@ -226,7 +226,7 @@ function GameDirector:createNewObject()
     if self.shoot then
         self.soldier:getAnimation():play("magic",-1,-1)
 
-        local bullet = WeaponClass.new(1)
+        local bullet = WeaponClass.new(self.weaponChooseLayer.bulletType)
 
         bullet:init(self.castle:getTowerTop(),self.speed)
         self.scene:addChild(bullet)

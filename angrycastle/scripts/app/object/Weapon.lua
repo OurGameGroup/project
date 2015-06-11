@@ -15,13 +15,23 @@ function Weapon:ctor(type)
 	self.effect = data.effect
 	self.effectTime = data.effectTime
 
-	self:initAnimation(data.animation)
+	if(data.body == "animation")then
+		self:initAnimation(data.animation)
+	elseif (data.body == "image")then
+		self:initImage(data.image)
+	end
 end
 
 function Weapon:init(pos,speed)
 	self:setPosition(pos)
 	self.speed = deepCopyCCPoint(speed)
 	self:setRotation(-math.deg(self.speed:getAngle())-90)
+end
+
+function Weapon:initImage(dataImage)
+	self.image = display.newSprite(dataImage)
+	self.image:scale(0.1)
+	self:addChild(self.image)
 end
 
 function Weapon:initAnimation(dataAnimation)
