@@ -16,6 +16,7 @@ GameData.accomplishment = {
 	{get = false,requireMoney = 70,img =  "Accomplishment/1000coins.png"}
 }
 
+
 GameData.weapon = {
 	{--fire bullet
 		speed = CCPoint(10, 10),
@@ -40,3 +41,10 @@ GameData.weapon = {
 		effect = "frozen"
 	}
 }
+
+GameData.nextChapterNum = {
+						  	{chapterNum = 1, killRequired = 10},
+						  	{chapterNum = 2, killRequired = 20},
+						  	{chapterNum = 3, killRequired = 30}
+						  }
+

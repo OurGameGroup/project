@@ -8,7 +8,11 @@ require("app.Tools.MyMath")
 require("app.GameData")
 require("app.object.Castle")
 require("app.object.Ground")
+
 WeaponClass = require("app.object.Weapon")
+
+require("app.Layer.ChapterLayer")
+
 EnemyClass = require("app.object.Enemy")
 BulletClass = require("app.object.Bullet")
 
@@ -40,6 +44,8 @@ function GameDirector:init(scene)
     self:initMoneyLayer()
 
     self:initAccomplishmentLayer()
+
+    self:initChapterLayer()
 end
 
 function GameDirector:initMusic()
@@ -113,6 +119,11 @@ function GameDirector:initAccomplishmentLayer()
     self.scene:addChild(self.accomplishmentLayer)
 end
 
+function GameDirector:initChapterLayer()
+    self.chapterLayer = ChapterLayer.new()
+    self.scene:addChild(self.chapterLayer)
+end
+
 function GameDirector:initData()
     self.count = 0
 	self.shoot = false
@@ -174,6 +185,10 @@ end
 
 function GameDirector:GameOver()
     return (self.castle.hp < 0)
+end
+
+function GameDirector:nextChapter(curChapt, killednum)
+    self.chapterLayer:goToChapter(curChapt, killednum)
 end
 
 function GameDirector:createNewObject()
@@ -274,9 +289,12 @@ function GameDirector:makeEffect()
         end
 
         if(enemy.hp < 0)then
+            self.chapterLayer:addKilledNum()
+            print(self.chapterLayer.killedNum)
             self.moneyLayer:addMoney()
             self.scene:removeChild(enemy)
             table.remove(self.enemyList,i)
+            self:nextChapter(self.chapterLayer.curChapter, self.chapterLayer.killedNum)
             i = i - 1
         end
     end

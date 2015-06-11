@@ -39,6 +39,13 @@ function MainScene:update()
         self._scheduler.unscheduleGlobal(self.handle)
     end
 
+    if (self.gameDirector.chapterLayer.goToNext == true) then
+        self.gameDirector:nextChapter(self.gameDirector.chapterLayer.curChapter, self.gameDirector.chapterLayer.killedNum)
+        display.replaceScene(require("app.scenes.StartScene").new(), "fade", 2.0, display.COLOR_WHITE)
+        self._scheduler.unscheduleGlobal(self.handle)
+        self.gameDirector.chapterLayer:init()
+    end
+
     self.gameDirector:update()
 end
 
