@@ -9,7 +9,7 @@ function WeaponChooseLayer:ctor()
 	-- self:addChild(self.img)
 	-- self:pos(display.cx,display.cy)
   
-  self:init({1,2})
+  self:init({1,2,3})
   self.pause = false
   self.selectedButton = 1
   self.changeWeapon = false

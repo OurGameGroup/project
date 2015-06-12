@@ -135,6 +135,8 @@ function Enemy:getEffect(effect,effectTime)
 	elseif (effect == "burning") then
 		self.burning = true
 		self.burningTime = effectTime
+	elseif (effect == "sudoKill") then
+		self.hp = -1
 	end
 end
 

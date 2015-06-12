@@ -48,6 +48,18 @@ GameData.weapon = {
 			normal = "freeze.png",
 			pressed = "freezePushed.png"
 		}
+	},
+	{--sudo kill
+		speed = CCPoint(10, 10),
+		gravityEnable = true,
+		rotatable = true,
+		effect = "sudoKill",
+		body = "image",
+		image = "bullet.png",
+		button = {
+			normal = "bullet.png",
+			pressed = "bulletPushed.png"
+		}
 	}
 }
 
