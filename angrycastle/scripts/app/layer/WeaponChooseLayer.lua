@@ -2,38 +2,39 @@ WeaponChooseLayer = class("WeaponChooseLayer", function()
     return display.newLayer()
 end)
 
+require("app.GameData")
+
 function WeaponChooseLayer:ctor()
 	-- self.img = display.newSprite("WeaponChoose.png")
 	-- self:addChild(self.img)
 	-- self:pos(display.cx,display.cy)
-  self:init()
+  
+  self:init({1,2})
   self.pause = false
-  self.bulletType = 1
-  self.changeBulletType = false
+  self.selectedButton = 1
+  self.changeWeapon = false
+  
 end
 
-function WeaponChooseLayer:init()
-	self.weaponOne = cc.ui.UIPushButton.new({ normal = "fire.png",pressed = "firePushed.png",})
-   		:onButtonClicked(
-   			function ()
-   				self.changeBulletType = true
-          self.bulletType = 1
-   			end
-   		)
-   		:pos(display.width/8, display.height/4*3)
-      :scale(0.15)
-  self:addChild(self.weaponOne)
+function WeaponChooseLayer:init(chosenWeaponList)
+  self.weaponList = {}
+  for i,number in ipairs(chosenWeaponList) do
+      local data = GameData.weapon[number]
 
-  self.weaponTwo = cc.ui.UIPushButton.new({ normal = "freeze.png",pressed = "freezePushed.png",})
+      local weapon = cc.ui.UIPushButton.new({ normal = data.button.normal,pressed = data.button.pressed})
       :onButtonClicked(
         function ()
-          self.changeBulletType = true
-          self.bulletType = 2
+          self.changeWeapon = true
+          self.selectedButton = number
+          print("selectnumber",number)
         end
       )
-      :pos(display.width/8*2, display.height/4*3)
+      :pos(display.width/8*i, display.height/4*3)
       :scale(0.15)
-  self:addChild(self.weaponTwo)
+      self:addChild(weapon)
+
+      table.insert(self.weaponList, {weaponType = number,speed = data.speed})
+  end
 
   self.pauseButton = cc.ui.UIPushButton.new({ normal = "pause.png",pressed = "pausePushed.png",})
       :onButtonClicked(

@@ -14,7 +14,7 @@ WeaponClass = require("app.object.Weapon")
 require("app.Layer.ChapterLayer")
 
 EnemyClass = require("app.object.Enemy")
-BulletClass = require("app.object.Bullet")
+
 
 function GameDirector:ctor()
    
@@ -31,7 +31,7 @@ function GameDirector:init(scene)
 
     self:initSoldier()
 
-    self:initBulletLayer()
+    self:initWeaponLayer()
 
     self:initEnemyLayer()
 
@@ -81,12 +81,6 @@ function GameDirector:initSoldier()
     self.soldier:getAnimation():play("magic",-1,-1)
 end
 
-function GameDirector:initBulletLayer()
-    self.bulletList = {}
-    self.bulletLayer = display.newNode()
-    self.scene:addChild(self.bulletLayer)
-end
-
 function GameDirector:initWeaponLayer()
     self.weaponList = {}
     self.weaponLayer = display.newNode()
@@ -132,10 +126,6 @@ function GameDirector:initData()
 
 	self.startPoint = CCPoint(display.cx,display.cy)
 	self.endPoint = CCPoint(display.cx,display.cy)
-
-    self.autoFireBulletSpeed1 = CCPoint(10,10)
-    self.autoFireBulletSpeed2 = CCPoint(10,10)
-    self.autoFireBulletType = 2
 end
 
 function GameDirector:update()
@@ -199,25 +189,18 @@ function GameDirector:createNewObject()
         table.insert(self.enemyList,enemy)
     end
 
-    local tempSpeed
-
-    if(self.weaponChooseLayer.bulletType == 1)then
-        tempSpeed = self.autoFireBulletSpeed2
-    else
-        tempSpeed = self.autoFireBulletSpeed1
-    end
-
-    if(self.weaponChooseLayer.bulletType == self.autoFireBulletType)then
-        self.autoFireBulletType = 3 - self.weaponChooseLayer.bulletType
-    end
-
     if self.count == 200 then
+        for i,autoFireType in ipairs(self.weaponChooseLayer.weaponList) do
+            if(autoFireType.weaponType ~= self.weaponChooseLayer.weaponList[self.weaponChooseLayer.selectedButton].weaponType)then
+                local weapon = WeaponClass.new(autoFireType.weaponType)
 
-        local bullet = WeaponClass.new(self.autoFireBulletType)
+                weapon:init(self.castle:getTowerTop(),autoFireType.speed)
+                self.scene:addChild(weapon)
 
-        bullet:init(self.castle:getTowerTop(),tempSpeed)
-        self.scene:addChild(bullet)
-        table.insert(self.bulletList,bullet)
+                table.insert(self.weaponList,weapon)
+            end
+        end
+        
         self.count = 0
     end
 
@@ -226,18 +209,14 @@ function GameDirector:createNewObject()
     if self.shoot then
         self.soldier:getAnimation():play("magic",-1,-1)
 
-        local bullet = WeaponClass.new(self.weaponChooseLayer.bulletType)
+        local weapon = WeaponClass.new(self.weaponChooseLayer.weaponList[self.weaponChooseLayer.selectedButton].weaponType)
 
-        bullet:init(self.castle:getTowerTop(),self.speed)
-        self.scene:addChild(bullet)
-        table.insert(self.bulletList,bullet)
+        weapon:init(self.castle:getTowerTop(),self.speed)
+        self.scene:addChild(weapon)
+        table.insert(self.weaponList,weapon)
         self.shoot = false
 
-        if(self.weaponChooseLayer.bulletType == 1)then
-            self.autoFireBulletSpeed1 = self.speed
-        else
-            self.autoFireBulletSpeed2 = self.speed
-        end
+        self.weaponChooseLayer.weaponList[self.weaponChooseLayer.selectedButton].speed = self.speed
     end
 end
 
@@ -246,19 +225,19 @@ function GameDirector:updatePosition()
         enemy:updatePosition()
     end
 
-    for i,bullet in ipairs(self.bulletList) do
-        bullet:updatePosition()
+    for i,weapon in ipairs(self.weaponList) do
+        weapon:updatePosition()
     end
 end
 
 function GameDirector:checkHit()
-    for i,bullet in ipairs(self.bulletList) do
-        bullet:hitTo(self.enemyList)
+    for i,weapon in ipairs(self.weaponList) do
+        weapon:hitTo(self.enemyList)
     end
 
-    for i,bullet in ipairs(self.bulletList) do
-        if(bullet:hitGround(self.ground)) then
-            bullet.hit = true
+    for i,weapon in ipairs(self.weaponList) do
+        if(weapon:hitGround(self.ground)) then
+            weapon.hit = true
         end
     end
 
@@ -269,10 +248,10 @@ function GameDirector:checkHit()
 end
 
 function GameDirector:makeEffect()
-    for i,bullet in ipairs(self.bulletList) do
-        if(bullet.hit or outOfScreen(bullet:getPositionInCCPoint(),10))then
-            self.scene:removeChild(bullet)
-            table.remove(self.bulletList,i)
+    for i,weapon in ipairs(self.weaponList) do
+        if(weapon.hit or outOfScreen(weapon:getPositionInCCPoint(),10))then
+            self.scene:removeChild(weapon)
+            table.remove(self.weaponList,i)
             i = i - 1
         end
     end
