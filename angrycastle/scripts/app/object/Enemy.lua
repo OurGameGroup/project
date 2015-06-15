@@ -106,7 +106,7 @@ function Enemy:updateByStatus()
         end
 		
         self.burningTime = self.burningTime - 1
-        
+
         self.onBurning = self.onBurning + 1
 
 		if(self.burningTime < 0)then
@@ -166,6 +166,9 @@ function Enemy:getEffectFromGround(effect,effectTime)
 	if(effect == "burning")then
 		self.burning = true
 		self.burningTime = effectTime
+	elseif (effect == "winding") then
+		self.winding = true
+		self.windingTime = 3
 	end
 end
 

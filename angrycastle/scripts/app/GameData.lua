@@ -70,6 +70,7 @@ GameData.weapon = {
 		effectTime = 120, -- frame per second
 		body = "image",
 		image = "bullet2.png",
+		hitGroundImage = "Effect/winding.png",
 		button = {
 			normal = "freeze.png",
 			pressed = "freezePushed.png"
