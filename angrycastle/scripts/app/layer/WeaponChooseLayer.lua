@@ -43,9 +43,11 @@ function WeaponChooseLayer:init(chosenWeaponList)
           if(self.pause) then
             self.pauseButton:setButtonImage("normal", "play.png", true)
             self.pauseButton:setButtonImage("pressed","playPushed.png",true)
+            display.pause()
           else
             self.pauseButton:setButtonImage("normal", "pause.png", true)
             self.pauseButton:setButtonImage("pressed","pausePushed.png",true)
+            display.resume()
           end
         end
       )

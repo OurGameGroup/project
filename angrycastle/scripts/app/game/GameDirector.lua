@@ -129,12 +129,10 @@ function GameDirector:initData()
 end
 
 function GameDirector:update()
-    if(self.weaponChooseLayer.pause == false)then
-        self:createNewObject()
-        self:updatePosition()
-        self:checkHit()
-        self:makeEffect()
-    end
+    self:createNewObject()
+    self:updatePosition()
+    self:checkHit()
+    self:makeEffect()
 end
 
 function GameDirector:onTouch(name,x,y,prevX,prevY)
