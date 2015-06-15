@@ -11,7 +11,7 @@ require("app.object.Ground")
 
 WeaponClass = require("app.object.Weapon")
 
-require("app.Layer.ChapterLayer")
+require("app.layer.ChapterLayer")
 
 EnemyClass = require("app.object.Enemy")
 

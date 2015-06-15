@@ -9,7 +9,7 @@ function WeaponChooseLayer:ctor()
 	-- self:addChild(self.img)
 	-- self:pos(display.cx,display.cy)
   
-  self:init({1,2,3,4})
+  self:init({2,1,3,4})
   self.pause = false
   self.selectedButton = 1
   self.changeWeapon = false
@@ -25,7 +25,7 @@ function WeaponChooseLayer:init(chosenWeaponList)
       :onButtonClicked(
         function ()
           self.changeWeapon = true
-          self.selectedButton = number
+          self.selectedButton = i
           print("selectnumber",number)
         end
       )
