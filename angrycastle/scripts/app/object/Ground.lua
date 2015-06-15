@@ -16,32 +16,18 @@ function Ground:init(pos)
 	self:setPosition(pos)
 end
 
-function Ground:showEffect(type,x)
-	if(type == "burning")then
-		local effect = EffectClass.new()
-		effect:init(CCPoint(x - self:getPositionX(), self:getPositionY() - 40),120)
-		self:addChild(effect)
-
-		table.insert(self.effectList, effect)
-	elseif(type == 2)then
-		local thunder = ThunderClass.new()
-		thunder:init(CCPoint(x - self:getPositionX(), self:getPositionY() - 40),120)
-		self:addChild(thunder)
-
-		local action1 = CCFadeIn:create(0.2)
-		local action2 = CCFadeOut:create(0.2)
-		local ccarray = CCArray:create()
-   		ccarray:addObject(action1)
-   		ccarray:addObject(action2)
-
-   		local SequenceAction = CCSequence:create(ccarray)
-
-		transition.execute(thunder, SequenceAction, {
-   			onComplete = function ()
-   				self:removeChild(thunder)
-   			end
-   		})
+function Ground:showEffect(weapon,x)
+	if(weapon.hitGroundImage == nil)then
+		return
 	end
+
+	local effect = EffectClass.new(weapon.effect,weapon.effectTime,weapon.hitGroundImage)
+
+	effect:init(CCPoint(x - self:getPositionX(), self:getPositionY() - 40),weapon.effectTime)
+	self:addChild(effect)
+
+	table.insert(self.effectList, effect)
+
 end
 
 function Ground:update()
@@ -59,10 +45,7 @@ end
 function Ground:giveEffect(enemy)
 	for i,effect in ipairs(self.effectList) do
 		if(hitN2N(effect, enemy))then
-			enemy.burning = true
-			if(enemy.burningTime < 60)then
-				enemy.burningTime = enemy.burningTime + 120
-			end
+			enemy:getEffectFromGround(effect.name, effect.effectTime)
 		end
 	end
 end

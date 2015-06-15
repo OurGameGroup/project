@@ -14,6 +14,8 @@ function Weapon:ctor(type)
 	self.rotatable = data.rotatable
 	self.effect = data.effect
 	self.effectTime = data.effectTime
+	self.doNotHitEnemy = data.doNotHitEnemy
+	self.hitGroundImage = data.hitGroundImage
 
 	if(data.body == "animation")then
 		self:initAnimation(data.animation)
@@ -66,7 +68,7 @@ end
 
 function Weapon:hitGround(ground)
 	if(self:getPositionY() <= ground:getPositionY()) then
-		ground:showEffect(self.effect,self:getPositionX())
+		ground:showEffect(self,self:getPositionX())
 		return true
 	end
 	return false

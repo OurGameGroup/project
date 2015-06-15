@@ -25,6 +25,7 @@ GameData.weapon = {
 		effect = "burning",
 		effectTime = 120, -- frame per second
 		body = "animation",
+		hitGroundImage = "Effect/fire.png",
 		animation = {
 			FileName = "fireBullet/fireBullet.ExportJson",
 			Name = "fireBullet",
@@ -37,7 +38,7 @@ GameData.weapon = {
 		}
 	},
 	{--frozen bullet
-		speed = CCPoint(10, 10),
+		speed = CCPoint(20, 10),
 		gravityEnable = true,
 		rotatable = true,
 		effect = "frozen",
@@ -50,7 +51,7 @@ GameData.weapon = {
 		}
 	},
 	{--sudo kill
-		speed = CCPoint(10, 10),
+		speed = CCPoint(15, 10),
 		gravityEnable = true,
 		rotatable = true,
 		effect = "sudoKill",
@@ -60,6 +61,20 @@ GameData.weapon = {
 			normal = "bullet.png",
 			pressed = "bulletPushed.png"
 		}
+	},
+	{--winding bullet
+		speed = CCPoint(5, 10),
+		gravityEnable = true,
+		rotatable = true,
+		effect = "winding",
+		effectTime = 120, -- frame per second
+		body = "image",
+		image = "bullet2.png",
+		button = {
+			normal = "freeze.png",
+			pressed = "freezePushed.png"
+		},
+		doNotHitEnemy = true
 	}
 }
 

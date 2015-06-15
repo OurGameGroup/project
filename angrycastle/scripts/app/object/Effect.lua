@@ -2,8 +2,10 @@ local Effect = class("Effect", function()
     return display.newNode()
 end)
 
-function Effect:ctor()
-	self.img = display.newSprite("Effect/fire.png")
+function Effect:ctor(weaponEffect,effectTime,hitGroundImage)
+	self.img = display.newSprite(hitGroundImage)
+	self.name = weaponEffect
+	self.effectTime = effectTime
 	self:addChild(self.img)
 end
 

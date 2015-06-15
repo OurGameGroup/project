@@ -232,7 +232,9 @@ end
 
 function GameDirector:checkHit()
     for i,weapon in ipairs(self.weaponList) do
-        weapon:hitTo(self.enemyList)
+        if(not weapon.doNotHitEnemy)then
+            weapon:hitTo(self.enemyList)
+        end
     end
 
     for i,weapon in ipairs(self.weaponList) do

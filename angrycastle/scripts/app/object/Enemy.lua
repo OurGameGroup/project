@@ -15,6 +15,10 @@ function Enemy:ctor()
 
 	self.burning = false
 	self.burningTime = 0
+	self.onBurning = 0
+
+	self.winding = false
+	self.windingTime = 0
 
 end
 
@@ -83,17 +87,31 @@ function Enemy:updateByStatus()
 		end
 	end
 
+	if self.winding then
+		self.speed = CCPoint(0, 0)
+		self._armature:getAnimation():setSpeedScale(0.1)
+		self.windingTime = self.windingTime - 1
+		if(self.windingTime < 0)then
+			self.winding = false
+			self.speed = deepCopyCCPoint(self.normalSpeed)
+			self._armature:getAnimation():setSpeedScale(1)
+		end
+	end
+
 	if self.burning then
 		
-		if(self.burningTime % 30 == 0) then
+		if(self.onBurning % 30 == 0) then
             self.hp = self.hp - 1
 			self:showDamage()
         end
 		
         self.burningTime = self.burningTime - 1
+        
+        self.onBurning = self.onBurning + 1
 
 		if(self.burningTime < 0)then
 			self.burning = false
+			self.onBurning = 0
 		end
 	end
 end
@@ -135,9 +153,21 @@ function Enemy:getEffect(effect,effectTime)
 	elseif (effect == "burning") then
 		self.burning = true
 		self.burningTime = effectTime
+		self.onBurning = 0
 	elseif (effect == "sudoKill") then
 		self.hp = -1
+	elseif (effect == "winding") then
+		self.winding = true
+		self.windingTime = effectTime
 	end
 end
+
+function Enemy:getEffectFromGround(effect,effectTime)
+	if(effect == "burning")then
+		self.burning = true
+		self.burningTime = effectTime
+	end
+end
+
 
 return Enemy
