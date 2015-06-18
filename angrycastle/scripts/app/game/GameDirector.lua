@@ -189,13 +189,15 @@ end
 
 function GameDirector:createNewObject()
     if(self.weaponChooseLayer.count0  > 0)then
-        if(self.weaponChooseLayer.count1 == 0)then
-            self.ultimateSkillLayer:showSkill("meteorShower", self.scene,self.weaponList)
-            self.weaponChooseLayer.count1 = randomNumber(1, 30)
-            self.weaponChooseLayer.count0 = self.weaponChooseLayer.count0 - 1
-        end
-        self.weaponChooseLayer.count1 = self.weaponChooseLayer.count1 - 1
+        -- if(self.weaponChooseLayer.count1 == 0)then
+        --     self.ultimateSkillLayer:showSkill("meteorShower", self.scene,self.weaponList)
+        --     self.weaponChooseLayer.count1 = randomNumber(1, 30)
+        --     self.weaponChooseLayer.count0 = self.weaponChooseLayer.count0 - 1
+        -- end
+        -- self.weaponChooseLayer.count1 = self.weaponChooseLayer.count1 - 1
+        self.weaponChooseLayer.count0 = self.ultimateSkillLayer:showSkill("meteorShower", self.scene,self.weaponList,self.weaponChooseLayer.count0)
     end
+
 
     if self.count == 100 or self.count == 200 then
         local enemy = EnemyClass.new()
