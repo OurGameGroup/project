@@ -4,6 +4,7 @@ require("app.layer.TraceLayer")
 require("app.layer.WeaponChooseLayer")
 require("app.layer.MoneyLayer")
 require("app.layer.AccomplishmentLayer")
+require("app.layer.UltimateSkillLayer")
 require("app.Tools.MyMath")
 require("app.GameData")
 require("app.object.Castle")
@@ -46,6 +47,8 @@ function GameDirector:init(scene)
     self:initAccomplishmentLayer()
 
     self:initChapterLayer()
+
+    self:initUltimateSkillLayer()
 end
 
 function GameDirector:initMusic()
@@ -118,6 +121,11 @@ function GameDirector:initChapterLayer()
     self.scene:addChild(self.chapterLayer)
 end
 
+function GameDirector:initUltimateSkillLayer()
+    self.ultimateSkillLayer = UltimateSkillLayer:new()
+    self.scene:addChild(self.ultimateSkillLayer)
+end
+
 function GameDirector:initData()
     self.count = 0
 	self.shoot = false
@@ -180,6 +188,15 @@ function GameDirector:nextChapter(curChapt, killednum)
 end
 
 function GameDirector:createNewObject()
+    if(self.weaponChooseLayer.count0  > 0)then
+        if(self.weaponChooseLayer.count1 == 0)then
+            self.ultimateSkillLayer:showSkill("meteorShower", self.scene,self.weaponList)
+            self.weaponChooseLayer.count1 = randomNumber(1, 30)
+            self.weaponChooseLayer.count0 = self.weaponChooseLayer.count0 - 1
+        end
+        self.weaponChooseLayer.count1 = self.weaponChooseLayer.count1 - 1
+    end
+
     if self.count == 100 or self.count == 200 then
         local enemy = EnemyClass.new()
         enemy:init(GameData.enemyBase)
@@ -188,8 +205,9 @@ function GameDirector:createNewObject()
     end
 
     if self.count == 200 then
+
         for i,autoFireType in ipairs(self.weaponChooseLayer.weaponList) do
-            if(autoFireType.weaponType ~= self.weaponChooseLayer.weaponList[self.weaponChooseLayer.selectedButton].weaponType)then
+            if(i ~= self.weaponChooseLayer.selectedButton)then    
                 local weapon = WeaponClass.new(autoFireType.weaponType)
 
                 weapon:init(self.castle:getTowerTop(),autoFireType.speed)

@@ -14,6 +14,9 @@ function WeaponChooseLayer:ctor()
   self.selectedButton = 1
   self.changeWeapon = false
   
+
+  self.count0 = 0
+  self.count1 = 0
 end
 
 function WeaponChooseLayer:init(chosenWeaponList)
@@ -36,6 +39,19 @@ function WeaponChooseLayer:init(chosenWeaponList)
       table.insert(self.weaponList, {weaponType = number,speed = data.speed})
   end
 
+  self.ultimateButton = cc.ui.UIPushButton.new({ normal = "pause.png",pressed = "pausePushed.png",})
+      :onButtonClicked(
+        function ()
+          if(self.count0 == 0)then
+            print("click")
+            self.count0 = 30
+          end
+        end
+      )
+      :pos(display.width/8*5, display.height/4*3)
+      :scale(0.15)
+  self:addChild(self.ultimateButton)
+
   self.pauseButton = cc.ui.UIPushButton.new({ normal = "pause.png",pressed = "pausePushed.png",})
       :onButtonClicked(
         function ()
@@ -54,6 +70,8 @@ function WeaponChooseLayer:init(chosenWeaponList)
       :pos(display.width/8, display.height/8*7)
       :scale(0.15)
   self:addChild(self.pauseButton)
+
+
 end
 
 return WeaponChooseLayer
