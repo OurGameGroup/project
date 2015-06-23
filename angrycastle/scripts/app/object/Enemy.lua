@@ -3,16 +3,19 @@ local Enemy = class("Enemy", function()
 end)
 require("app.Tools.MyMath")
 BloodClass = require("app.object.progressBar")
+TextClass = require("app.Tools.MyText")
 
 function Enemy:ctor()
-	self:initAnimation()
-
-	self.blood = BloodClass.new()
-	self.blood:setPosition(CCPoint(-10,50))
-	self:addChild(self.blood)
-
-
+	
+	
 	self.hp = 6
+
+	self.quick = randomNumber(0,3) < 1
+	self.strong = randomNumber(0,3) < 1
+
+	if(self.strong)then
+		self.hp = 2 * self.hp
+	end
 
 	self.underTower = false
 	self.underTowerTime = -1
@@ -27,6 +30,9 @@ function Enemy:ctor()
 	self.winding = false
 	self.windingTime = 0
 
+	self:initAnimation()
+	self:initBloodBar()
+
 end
 
 function Enemy:init(pos)
@@ -34,9 +40,50 @@ function Enemy:init(pos)
 	self:setZOrder(60 - zOrder)
 	self:pos(pos.x,pos.y+zOrder)
 	self.normalSpeed = CCPoint(-1, 0)
+	if(self.quick)then
+		self.normalSpeed = numberTimesCCPoint(2,self.normalSpeed)
+	end
 	self.speed = deepCopyCCPoint(self.normalSpeed)
 	self.state = "running"
 	self.interruptable = true
+
+	self:initName(name)
+end
+
+function Enemy:initName()
+	local name = "怪物"
+	local count = 0
+
+	if(self.quick)then
+		name = "迅速的"..name
+		count = count + 1
+	end
+
+	if(self.strong)then
+		name = "强壮的"..name
+		count = count + 1
+	end
+
+	if(count == 0)then
+		name = "普通的"..name
+	end
+
+	self.name = TextClass.new(name)
+	self.name:setPosition(CCPoint(-10,60))
+
+	if(count == 1)then
+		self.name:setColor("purple")
+	elseif (count == 2) then
+		self.name:setColor("yellow")
+	end
+
+	self:addChild(self.name)
+end
+
+function Enemy:initBloodBar()
+	self.blood = BloodClass.new(self.hp)
+	self.blood:setPosition(CCPoint(-10,50))
+	self:addChild(self.blood)
 end
 
 function Enemy:initAnimation()
@@ -124,7 +171,7 @@ function Enemy:updateByStatus()
 end
 
 function Enemy:showDamage()
-	self.blood:setPercentage(self.hp/6)
+	self.blood:setPercentage(self.hp)
 	local labelTTF = ui.newTTFLabelWithOutline({
 		text  = "-1",
 		size  = 20,
