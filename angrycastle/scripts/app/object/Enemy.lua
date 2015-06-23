@@ -180,5 +180,9 @@ function Enemy:getEffectFromGround(effect,effectTime)
 	end
 end
 
+function Enemy:getCascadeBoundingBox()
+	return self._armature:getCascadeBoundingBox()
+end
+
 
 return Enemy
