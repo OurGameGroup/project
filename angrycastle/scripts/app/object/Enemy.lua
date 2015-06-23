@@ -2,8 +2,15 @@ local Enemy = class("Enemy", function()
     return display.newNode()
 end)
 require("app.Tools.MyMath")
+BloodClass = require("app.object.progressBar")
+
 function Enemy:ctor()
 	self:initAnimation()
+
+	self.blood = BloodClass.new()
+	self.blood:setPosition(CCPoint(-10,50))
+	self:addChild(self.blood)
+
 
 	self.hp = 6
 
@@ -23,9 +30,9 @@ function Enemy:ctor()
 end
 
 function Enemy:init(pos)
-	local yOrder = math.ceil(randomNumber(0, 60))
-	self:setZOrder(60 - yOrder)
-	self:pos(pos.x,pos.y+yOrder)
+	local zOrder = math.ceil(randomNumber(0, 60))
+	self:setZOrder(60 - zOrder)
+	self:pos(pos.x,pos.y+zOrder)
 	self.normalSpeed = CCPoint(-1, 0)
 	self.speed = deepCopyCCPoint(self.normalSpeed)
 	self.state = "running"
@@ -117,6 +124,7 @@ function Enemy:updateByStatus()
 end
 
 function Enemy:showDamage()
+	self.blood:setPercentage(self.hp/6)
 	local labelTTF = ui.newTTFLabelWithOutline({
 		text  = "-1",
 		size  = 20,
