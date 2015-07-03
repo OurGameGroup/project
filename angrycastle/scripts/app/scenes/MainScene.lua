@@ -33,6 +33,10 @@ function MainScene:initControl()
     self:addChild(layer)
 end
 
+function MainScene:onEnter()
+    self.pause = false
+end
+
 function MainScene:update()
     if(self.gameDirector:GameOver())then
         display.replaceScene(require("app.scenes.StartScene").new(), "fade", 2.0, display.COLOR_WHITE)

@@ -1,7 +1,7 @@
 local StartScene = class("StartScene", function()
     return display.newScene("StartScene")
 end)
- 
+
 function StartScene:ctor()
     self:setBackground()
     self:setPlayButton()

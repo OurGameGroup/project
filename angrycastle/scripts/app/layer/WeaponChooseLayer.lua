@@ -3,6 +3,7 @@ WeaponChooseLayer = class("WeaponChooseLayer", function()
 end)
 
 require("app.GameData")
+require("app.game.GamePause")
 
 function WeaponChooseLayer:ctor()
 	-- self.img = display.newSprite("WeaponChoose.png")
@@ -55,16 +56,9 @@ function WeaponChooseLayer:init(chosenWeaponList)
   self.pauseButton = cc.ui.UIPushButton.new({ normal = "pause.png",pressed = "pausePushed.png",})
       :onButtonClicked(
         function ()
-          self.pause = not self.pause
-          if(self.pause) then
-            self.pauseButton:setButtonImage("normal", "play.png", true)
-            self.pauseButton:setButtonImage("pressed","playPushed.png",true)
-            display.pause()
-          else
-            self.pauseButton:setButtonImage("normal", "pause.png", true)
-            self.pauseButton:setButtonImage("pressed","pausePushed.png",true)
-            display.resume()
-          end
+          self:getParent().pause = true
+          CCDirector:sharedDirector():getActionManager():pauseAllRunningActions()
+          gamePause(self:getParent())
         end
       )
       :pos(display.width/8, display.height/8*7)

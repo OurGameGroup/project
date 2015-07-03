@@ -52,28 +52,28 @@ end
 
 function Enemy:initName()
 	local name = "怪物"
-	local count = 0
+	local affixCount = 0
 
 	if(self.quick)then
 		name = "迅速的"..name
-		count = count + 1
+		affixCount = affixCount + 1
 	end
 
 	if(self.strong)then
 		name = "强壮的"..name
-		count = count + 1
+		affixCount = affixCount + 1
 	end
 
-	if(count == 0)then
+	if(affixCount == 0)then
 		name = "普通的"..name
 	end
 
 	self.name = TextClass.new(name)
 	self.name:setPosition(CCPoint(-10,60))
 
-	if(count == 1)then
+	if(affixCount == 1)then
 		self.name:setColor("purple")
-	elseif (count == 2) then
+	elseif (affixCount == 2) then
 		self.name:setColor("yellow")
 	end
 

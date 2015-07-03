@@ -134,13 +134,17 @@ function GameDirector:initData()
 
 	self.startPoint = CCPoint(display.cx,display.cy)
 	self.endPoint = CCPoint(display.cx,display.cy)
+
+    self.scene.pause = false
 end
 
 function GameDirector:update()
-    self:createNewObject()
-    self:updatePosition()
-    self:checkHit()
-    self:makeEffect()
+    if(not self.scene.pause)then
+        self:createNewObject()
+        self:updatePosition()
+        self:checkHit()
+        self:makeEffect()
+    end
 end
 
 function GameDirector:onTouch(name,x,y,prevX,prevY)
