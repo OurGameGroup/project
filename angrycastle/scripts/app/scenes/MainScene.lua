@@ -39,11 +39,13 @@ end
 
 function MainScene:update()
     if(self.gameDirector:GameOver())then
+        audio.stopAllSounds()
         display.replaceScene(require("app.scenes.StartScene").new(), "fade", 2.0, display.COLOR_WHITE)
         self._scheduler.unscheduleGlobal(self.handle)
     end
 
     if (self.gameDirector.chapterLayer.goToNext == true) then
+        audio.stopAllSounds()
         self.gameDirector:nextChapter(self.gameDirector.chapterLayer.curChapter, self.gameDirector.chapterLayer.killedNum)
         display.replaceScene(require("app.scenes.StartScene").new(), "fade", 2.0, display.COLOR_WHITE)
         self._scheduler.unscheduleGlobal(self.handle)

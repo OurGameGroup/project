@@ -3,35 +3,40 @@ local StartScene = class("StartScene", function()
 end)
 
 function StartScene:ctor()
-    self:setBackground()
-    self:setPlayButton()
+	cc.FileUtils:getInstance():addSearchPath("res/EnterScene/")
+	local node,width,height = cc.uiloader:load("EnterScene_1.ExportJson")
+
+	self:addChild(node)
+
+    local startButton = cc.uiloader:seekNodeByName(self,"start")
+	startButton:onButtonClicked(function()
+		display.replaceScene(require("app.scenes.MainScene").new(), "fade", 2.0, display.COLOR_WHITE)
+	end)
+
+	local aboutButton = cc.uiloader:seekNodeByName(self,"about")
+	local quitButton = cc.uiloader:seekNodeByName(self,"quit")
+	local soundButton = cc.uiloader:seekNodeByName(self,"sound")
+
+	local action1 = CCScaleBy:create(2,1.25)
+	local action2 = action1:reverse()
+	local ccarray = CCArray:create()
+	ccarray:addObject(action1)
+	ccarray:addObject(action2)
+	local SequenceAction = CCSequence:create(ccarray)
+	
+	-- local CCSpawnAction = CCSpawn:create()
+
+	transition.execute(startButton, CCRepeatForever:create(SequenceAction))
+	-- transition.execute(aboutButton, CCRepeatForever:create(SequenceAction),0.5)
+	-- transition.execute(quitButton, CCRepeatForever:create(SequenceAction),1)
+	-- transition.execute(soundButton, CCRepeatForever:create(SequenceAction),1.5)
+
+	local moon = cc.uiloader:seekNodeByName(self,"moon")
+
+	transition.execute(moon, CCRepeatForever:create(CCRotateBy:create(1, 1)))
+
+	
 end
 
-function StartScene:setBackground()
-	local background = CCSprite:create("background1.png")
-    background:setPosition(display.cx, display.cy)
-    self:addChild(background)
-end
-
-function StartScene:setPlayButton()
-	local sprite1 = display.newSprite("play1.png")
-    sprite1:setPosition(100,100)
- 	sprite1:scale(0.5)
-	sprite1:rotation(0)
-
-	local sprite2 = display.newSprite("play2.png")
-    sprite2:setPosition(100,100)
- 	sprite2:scale(0.5)
-	sprite2:rotation(0)
-
-	item = ui.newImageMenuItem({image=sprite1, imageSelected=sprite2,
-    listener = function()
-        display.replaceScene(require("app.scenes.MainScene").new(), "fade", 2.0, display.COLOR_WHITE)
-    end})
-	item:setPosition(display.cx*16/15, display.cy*2/3)
-	local menu = ui.newMenu({item})
-	menu:setPosition(display.left, display.bottom)
-	self:addChild(menu)
-end
  
 return StartScene
