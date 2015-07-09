@@ -18,8 +18,8 @@ GameData.money = 0
 GameData.accomplishment = {
 --格式：{get=false，requireMoney = 需要的数字，img = 成就图片路径}
 	{get = false,requireMoney = 10,img =  "Accomplishment/firstblood.png"},
-	{get = false,requireMoney = 30,img =  "Accomplishment/10enemy.png"},
-	{get = false,requireMoney = 70,img =  "Accomplishment/1000coins.png"}
+	{get = false,requireMoney = 50,img =  "Accomplishment/5enemy.png"},
+	{get = false,requireMoney = 1000,img =  "Accomplishment/1000coins.png"}
 }
 
 
@@ -50,7 +50,7 @@ GameData.weapon = {
 		effect = "frozen",
 		effectTime = 120, -- frame per second
 		body = "image",
-		image = "bullet2.png",
+		image = "freezingBullet.png",
 		button = {
 			normal = "freeze.png",
 			pressed = "freezePushed.png"
@@ -75,7 +75,7 @@ GameData.weapon = {
 		effect = "winding",
 		effectTime = 120, -- frame per second
 		body = "image",
-		image = "bullet2.png",
+		image = "windBullet.png",
 		hitGroundImage = "Effect/winding.png",
 		button = {
 			normal = "winding.png",

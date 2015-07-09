@@ -27,9 +27,9 @@ function StartScene:ctor()
 	local moon = cc.uiloader:seekNodeByName(self,"moon")
 
 	if(GameData.chapter == 2)then
-		moon:setColor(ccc3(180,0,0))
+		moon:setColor(ccc3(255,40,40))
 	elseif (GameData.chapter == 3) then
-		moon:setColor(ccc3(0,0,180))
+		moon:setColor(ccc3(80,80,255))
 	end
 
 	transition.execute(moon, CCRepeatForever:create(CCRotateBy:create(1, 1)))
