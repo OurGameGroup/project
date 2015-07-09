@@ -9,8 +9,8 @@ function PopWindow:ctor(texture)
 	bg:setColor(ccc3(100,100,100))
 	self:addChild(bg)
 
-	cc.FileUtils:getInstance():addSearchPath("res/pauseWindow/")
-	local node,width,height = cc.uiloader:load("pauseWindow_1.ExportJson")
+	cc.FileUtils:getInstance():addSearchPath("res/PauseWindow/")
+	local node,width,height = cc.uiloader:load("PauseWindow_1.ExportJson")
 
 	node:pos(display.cx,0)
 	node:scale(0.5)
@@ -20,6 +20,11 @@ function PopWindow:ctor(texture)
 	playButton:onButtonClicked(function ( event )
 		audio.resumeAllSounds()
 		CCDirector:sharedDirector():popScene()
+	end)
+
+	local exitButton = cc.uiloader:seekNodeByName(self,"exit")
+	exitButton:onButtonClicked(function ()
+		display.replaceScene(require("app.scenes.StartScene").new(), "fade", 2.0, display.COLOR_WHITE)
 	end)
 
 	node:setAnchorPoint(ccp(0.5,0))

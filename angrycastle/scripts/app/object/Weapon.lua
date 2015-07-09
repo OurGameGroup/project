@@ -30,7 +30,9 @@ function Weapon:init(pos,speed)
 	self:setPosition(pos)
 	self.speed = deepCopyCCPoint(speed)
 	self:setRotation(-math.deg(self.speed:getAngle())-90)
-	self.sound = audio.playSound("fireBullet/burning.wav", true)
+	if(self.effect == "burning" and GameData.sound)then
+		self.sound = audio.playSound("fireBullet/burning.wav", true)
+	end
 end
 
 function Weapon:initImage(dataImage)
@@ -65,7 +67,9 @@ function Weapon:hitTo(enemyList)
 		if(hitN2N(self, enemy))then
 			enemy:getEffect(self.effect,self.effectTime)
 			self.hit = true
-			audio.stopSound(self.sound)
+			if(self.effect == "burning" and GameData.sound)then
+				audio.stopSound(self.sound)
+			end
 		end
 	end
 end
@@ -73,7 +77,9 @@ end
 function Weapon:hitGround(ground)
 	if(self:getPositionY() <= ground:getPositionY()) then
 		ground:showEffect(self,self:getPositionX())
-		audio.stopSound(self.sound)
+		if(self.effect == "burning" and GameData.sound)then
+			audio.stopSound(self.sound)
+		end
 		return true
 	end
 	return false

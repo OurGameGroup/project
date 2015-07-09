@@ -4,16 +4,16 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>bg.png</key>
+			<key>pauseFinal.png</key>
 			<dict>
 				<key>width</key>
-				<integer>512</integer>
+				<integer>1024</integer>
 				<key>height</key>
-				<integer>263</integer>
-				<key>originalWidth</key>
 				<integer>512</integer>
+				<key>originalWidth</key>
+				<integer>1024</integer>
 				<key>originalHeight</key>
-				<integer>263</integer>
+				<integer>512</integer>
 				<key>x</key>
 				<integer>0</integer>
 				<key>y</key>
@@ -23,18 +23,18 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>C:/Program Files (x86)/Cocos Studio/EditorDefaultRes/GUI/button.png</key>
+			<key>jixu.png</key>
 			<dict>
 				<key>width</key>
-				<integer>103</integer>
+				<integer>256</integer>
 				<key>height</key>
-				<integer>40</integer>
+				<integer>256</integer>
 				<key>originalWidth</key>
-				<integer>103</integer>
+				<integer>256</integer>
 				<key>originalHeight</key>
-				<integer>40</integer>
+				<integer>256</integer>
 				<key>x</key>
-				<integer>514</integer>
+				<integer>1026</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
@@ -42,20 +42,20 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>play.png</key>
+			<key>tuichu.png</key>
 			<dict>
 				<key>width</key>
-				<integer>512</integer>
+				<integer>256</integer>
 				<key>height</key>
-				<integer>512</integer>
+				<integer>256</integer>
 				<key>originalWidth</key>
-				<integer>512</integer>
+				<integer>256</integer>
 				<key>originalHeight</key>
-				<integer>512</integer>
+				<integer>256</integer>
 				<key>x</key>
-				<integer>0</integer>
+				<integer>1284</integer>
 				<key>y</key>
-				<integer>265</integer>
+				<integer>0</integer>
 				<key>offsetX</key>
 				<real>0</real>
 				<key>offsetY</key>
@@ -67,18 +67,18 @@
 			<key>format</key>
 			<integer>0</integer>
 			<key>textureFileName</key>
-			<string>pauseWindow0.png</string>
+			<string>PAUSEW~10.png</string>
 			<key>realTextureFileName</key>
-			<string>pauseWindow0.png</string>
+			<string>PAUSEW~10.png</string>
 			<key>size</key>
-			<string>{1024,1024}</string>
+			<string>{2048,2048}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>1024</integer>
+			<integer>2048</integer>
 			<key>height</key>
-			<integer>1024</integer>
+			<integer>2048</integer>
 		</dict>
 	</dict>
 </plist>

@@ -2,8 +2,10 @@ ChapterLayer = class("ChapterLayer", function()
     return display.newLayer()
 end)
 
+require("app.GameData")
+
 function ChapterLayer:ctor()
-	self.curChapter = 1
+	self.curChapter = GameData.chapter
 	self.killedNum = 0
 	self.goToNext = false
 end
@@ -22,6 +24,7 @@ function ChapterLayer:goToChapter(curChapt, killednum)
 			print("GoTo ",(curChapt + 1)," chapter")
 			self.killedNum = 0
 			self.curChapter = self.curChapter + 1
+			GameData.chapter = self.curChapter
 			self.goToNext = true
 		end
 	end

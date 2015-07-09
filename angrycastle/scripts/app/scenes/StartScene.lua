@@ -2,6 +2,8 @@ local StartScene = class("StartScene", function()
     return display.newScene("StartScene")
 end)
 
+require("app.GameData")
+
 function StartScene:ctor()
 	cc.FileUtils:getInstance():addSearchPath("res/EnterScene/")
 	local node,width,height = cc.uiloader:load("EnterScene_1.ExportJson")
@@ -17,25 +19,50 @@ function StartScene:ctor()
 	local quitButton = cc.uiloader:seekNodeByName(self,"quit")
 	local soundButton = cc.uiloader:seekNodeByName(self,"sound")
 
+	transition.execute(startButton, shake())
+	transition.execute(aboutButton, shake())
+	transition.execute(quitButton, shake())
+	transition.execute(soundButton, shake())
+
+	local moon = cc.uiloader:seekNodeByName(self,"moon")
+
+	if(GameData.chapter == 2)then
+		moon:setColor(ccc3(180,0,0))
+	elseif (GameData.chapter == 3) then
+		moon:setColor(ccc3(0,0,180))
+	end
+
+	transition.execute(moon, CCRepeatForever:create(CCRotateBy:create(1, 1)))
+	
+	self:initAboutPage()
+
+	aboutButton:onButtonClicked(function()
+		self.aboutPage:setVisible(true)
+	end)
+	
+end
+
+function StartScene:initAboutPage()
+	self.aboutPage = cc.ui.UIPushButton.new({ normal = "about.jpg"})
+      :onButtonClicked(
+        function ()
+        	self.aboutPage:setVisible(false)
+        end
+      )
+      :pos(display.cx, display.cy)
+  	self:addChild(self.aboutPage)
+
+  	self.aboutPage:setVisible(false)
+end
+
+function shake()
 	local action1 = CCScaleBy:create(2,1.25)
 	local action2 = action1:reverse()
 	local ccarray = CCArray:create()
 	ccarray:addObject(action1)
 	ccarray:addObject(action2)
 	local SequenceAction = CCSequence:create(ccarray)
-	
-	-- local CCSpawnAction = CCSpawn:create()
-
-	transition.execute(startButton, CCRepeatForever:create(SequenceAction))
-	-- transition.execute(aboutButton, CCRepeatForever:create(SequenceAction),0.5)
-	-- transition.execute(quitButton, CCRepeatForever:create(SequenceAction),1)
-	-- transition.execute(soundButton, CCRepeatForever:create(SequenceAction),1.5)
-
-	local moon = cc.uiloader:seekNodeByName(self,"moon")
-
-	transition.execute(moon, CCRepeatForever:create(CCRotateBy:create(1, 1)))
-
-	
+	return CCRepeatForever:create(SequenceAction)
 end
 
  

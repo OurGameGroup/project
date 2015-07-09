@@ -23,7 +23,7 @@ function Ground:showEffect(weapon,x)
 
 	local effect = EffectClass.new(weapon.effect,weapon.effectTime,weapon.hitGroundImage)
 
-	effect:init(CCPoint(x - self:getPositionX(), self:getPositionY() - 40),weapon.effectTime)
+	effect:init(CCPoint(x - self:getPositionX(), self:getPositionY()-100),weapon.effectTime)
 	self:addChild(effect)
 
 	table.insert(self.effectList, effect)

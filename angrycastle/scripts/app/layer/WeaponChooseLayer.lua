@@ -30,7 +30,7 @@ function WeaponChooseLayer:init(chosenWeaponList)
         function ()
           self.changeWeapon = true
           self.selectedButton = i
-          print("selectnumber",number)
+          -- print("selectnumber",number)
         end
       )
       :pos(display.width/8*i, display.height/4*3)
@@ -40,11 +40,11 @@ function WeaponChooseLayer:init(chosenWeaponList)
       table.insert(self.weaponList, {weaponType = number,speed = data.speed})
   end
 
-  self.ultimateButton = cc.ui.UIPushButton.new({ normal = "pause.png",pressed = "pausePushed.png",})
+  self.ultimateButton = cc.ui.UIPushButton.new({ normal = "ultimateSkill.png",pressed = "ultimateSkillPushed.png",})
       :onButtonClicked(
         function ()
           if(self.count0 == 0)then
-            print("click")
+            -- print("click")
             self.count0 = 30
           end
         end
@@ -64,6 +64,24 @@ function WeaponChooseLayer:init(chosenWeaponList)
       :pos(display.width/8, display.height/8*7)
       :scale(0.15)
   self:addChild(self.pauseButton)
+
+  self.soundButton = cc.ui.UIPushButton.new({ normal = "music.png"})
+      :onButtonClicked(
+        function ()
+          GameData.sound = not GameData.sound 
+          if GameData.sound then
+            self.soundButton:setButtonImage("normal", "music.png", true)
+          else 
+            audio.stopAllSounds()
+            -- audio.stopBackgroundMusic()
+            self.soundButton:setButtonImage("normal", "stopmusic.png", true)
+          end
+          
+        end
+      )
+      :pos(display.width/4, display.height/8*7)
+      :scale(0.15)
+  self:addChild(self.soundButton)
 
 
 end

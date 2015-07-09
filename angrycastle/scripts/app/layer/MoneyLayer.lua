@@ -1,9 +1,9 @@
 MoneyLayer = class("Moneyayer", function()
     return display.newLayer()
 end)
-
+require("app.GameData")
 function MoneyLayer:ctor()
-	self.money = 0
+	self.money = GameData.money
 	self:init()
 end
 
@@ -28,6 +28,7 @@ end
 
 function MoneyLayer:addMoney()
 	self.money = self.money + 10
+	GameData.money = self.money
 	self.labelTTF:setString(self.money)
 end
 

@@ -9,6 +9,12 @@ GameData.defaultSpeedScale = 20/display.width
 
 GameData.enemyBase = CCPoint(800 , 100)
 
+GameData.sound = true
+
+GameData.chapter = 1
+
+GameData.money = 0
+
 GameData.accomplishment = {
 --格式：{get=false，requireMoney = 需要的数字，img = 成就图片路径}
 	{get = false,requireMoney = 10,img =  "Accomplishment/firstblood.png"},
@@ -58,8 +64,8 @@ GameData.weapon = {
 		body = "image",
 		image = "bullet.png",
 		button = {
-			normal = "bullet.png",
-			pressed = "bulletPushed.png"
+			normal = "sudoKill.png",
+			pressed = "sudoKillPushed.png"
 		}
 	},
 	{--winding bullet
@@ -72,8 +78,8 @@ GameData.weapon = {
 		image = "bullet2.png",
 		hitGroundImage = "Effect/winding.png",
 		button = {
-			normal = "freeze.png",
-			pressed = "freezePushed.png"
+			normal = "winding.png",
+			pressed = "windingPushed.png"
 		},
 		doNotHitEnemy = true
 	}
